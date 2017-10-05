@@ -7,7 +7,7 @@
  * See https://developers.google.com/apps-script/guides/triggers/events#google_sheets_events
  */
 function test_onFormSubmit() {
-  var dataRange = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Cab-Ease Form').getDataRange();
+  var dataRange = SpreadsheetApp.getActiveSheet().getDataRange();
   var data = dataRange.getValues();
   var headers = data[0];
   // Start at row 1, skipping headers in row 0
@@ -30,9 +30,10 @@ function test_onFormSubmit() {
 
 
 function onFormSubmit(e) {
-  Logger.log(e);
   var page = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(e.namedValues["Driver ID"][0]);
-  var pageData = page.getDataRange().getDisplayValues();
+  var lastRow = page.getLastRow();
+  var lastCol = page.getLastColumn();
+  var pageData = page.getRange(1,1,lastRow,lastCol).getDisplayValues();
   
   // Set a date, then move it back 28 days for a lower bound for items.
   var date = new Date();
@@ -44,14 +45,15 @@ function onFormSubmit(e) {
   
   // if Confirmation Number matches, or date is too early remove that row and redo that row again.
   for (var row=0; row<pageData.length; row++) {
-    if ((pageData[row][4] == e.namedValues["Confirmation Number"][0] && pageData[row][2] == "Add Fare") || pageData[row][0] < date || pageData[row][0] == e.Timestamp) {
+    if (pageData[row][4] == e.namedValues["Confirmation Number"][0] ||
+        pageData[row][0] < date) {
       pageData.splice(row, 1);  
       row--;
     }
   }
   
   // Reorganize the data into the correct array
-  var temp = new Array(pageData[0].length);
+  var temp = new Array(12);
   for (var x=0; x<pageData[0].length; x++) {
     switch (pageData[0][x]) {
       case "Timestamp":
@@ -75,28 +77,25 @@ function onFormSubmit(e) {
       case "Fare Type":
         temp[6] = e.namedValues["Fare Type"][0];
         break;
-      case "Check box if there is a fare discrepancy.":
-        temp[7] = e.namedValues["Check box if there is a fare discrepancy."][0];
-        break;  
       case "Amount of expense/gas":
-        temp[8] = e.namedValues["Amount of expense/gas"][0];
+        temp[7] = e.namedValues["Amount of expense/gas"][0];
         break;
       case "Expense/Gas":
-        temp[9] = e.namedValues["Expense/Gas"][0];
+        temp[8] = e.namedValues["Expense/Gas"][0];
         break;
       case "Description (Expense only)":
-        temp[10] = e.namedValues["Description (Expense only)"][0];
+        temp[9] = e.namedValues["Description (Expense only)"][0];
         break;
       case "Log In/Log Off":
-        temp[11] = e.namedValues["Log In/Log Off"][0];
+        temp[10] = e.namedValues["Log In/Log Off"][0];
         break;
       case "Current Mileage":
-        temp[12] = e.namedValues["Current Mileage"][0];
+        temp[11] = e.namedValues["Current Mileage"][0];
         break;
     }
   }
   
   pageData.push(temp);
   page.getRange(1,1,pageData.length,pageData[0].length).setValues(pageData);
-  page.sort(1);
+  page.sort(1, false);
 }

@@ -2,7 +2,7 @@
 function onEdit(e) {
   if (e.source.getSheetName() == "Roster") {
     var roster = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Roster");
-    var rosterData = roster.getDataRange().getDisplayValues();
+    var rosterData = roster.getRange(1,1,roster.getLastRow(),roster.getLastColumn()).getDisplayValues();
     var ids = new Array();
     
     for (var x=0; x<rosterData.length; x++) {
