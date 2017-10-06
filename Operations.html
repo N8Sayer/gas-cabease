@@ -191,9 +191,13 @@
       #credit {
         width: 5em;
       }  
-      .logOnForm,
-      #mileage {
+      .logOnForm label,
+      .logOnForm input,
+      #loginDiv {
         font-size: 4vw;
+      }
+      .logOnForm,
+      .logOnForm input {
         width: 40%;
         margin: auto;
       }
@@ -215,6 +219,23 @@
       #fareAmt {
         margin: 0px 0px 25px 0px;
       }      
+      #signout {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        width: 100px;
+        height: 100px;
+        color: #333;
+      }
+      div .abcRioButtonContentWrapper {
+        background-color: #555;
+      }
+      .g-signin2 {
+        margin-left: 5px;
+      }
+      .abcRioButtonContents span {
+        color: white;
+      }
   </style>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   </head>
@@ -287,6 +308,7 @@
       
       <div class="logOnForm">
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a id="signout" href="#" onclick="signOut()">Sign Out</a>
         <div id='loginDiv' style='display: none;'> 
           <span id="login">Driver ID </span><span id='loginId'></span>
         </div>
