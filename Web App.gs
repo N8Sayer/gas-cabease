@@ -28,7 +28,7 @@ function sheetUpdate(sheetName, data, editFare) {
     var duplicateEntry = false;
     
     sheetData.forEach(function (row) {
-      if (data[4] == row[4] && data[4] !== "") {
+      if (data[4] == row[4]) {
         duplicateEntry = true;
       }
     });
@@ -99,6 +99,17 @@ function getPastFares(agentId) {
   }
 }
 
+function getAgentPolicies(agentName) {
+  var database = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Agent Policies').getDataRange().getDisplayValues();
+  var agentPolicies = [];
+  database.forEach(function (row) {
+    if (agentName == row[1]) {
+       agentPolicies.push(row);
+    }
+  });
+  return agentPolicies;
+}
+
 function getDriverId(email) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('B:C').getDisplayValues();
   
@@ -107,8 +118,4 @@ function getDriverId(email) {
       return sheet[x][0]; 
     }
   }
-}
-
-function test() {
-  Logger.log(SpreadsheetApp.getActiveSpreadsheet().getSheetByName('42').getIndex());
 }
