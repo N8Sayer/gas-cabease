@@ -241,10 +241,10 @@
   </head>
   <body>
     <div class="tab">
-      <button class="tablinks active" id="logon" onclick="openTab(event,'logOnOff')">Log On</button>
-      <button class="tablinks" id="newFare" onclick="openTab(event,'addFare')">Add Fare</button>
-      <button class="tablinks" id="newExpense" onclick="openTab(event,'addExpense')">Add Expense/Gas</button>      
-      <button class="tablinks" id="changeFare" onclick="openTab(event,'editFare')">Edit Fare</button>
+      <button style = "display: none;" class="tablinks active" id="logon" onclick="openTab(event,'logOnOff')">Log On</button>
+      <button style = "display: none;" class="tablinks" id="newFare" onclick="openTab(event,'addFare')">Add Fare</button>
+      <button style = "display: none;" class="tablinks" id="newExpense" onclick="openTab(event,'addExpense')">Add Expense/Gas</button>      
+      <button style = "display: none;" class="tablinks" id="changeFare" onclick="openTab(event,'editFare')">Edit Fare</button>
     </div>
            
     <div class="tabcontent" id="addFare">
@@ -267,7 +267,7 @@
         <label for="discrepancy">Was there a Fare Discrepancy?</label>
         <div class="buttons" id="discrepancy">
           <button type="button" class="button" onclick="discrepancy(this)">Yes</button>
-          <button type="button" class="button selected" onclick="discrepancy(this)">No</button>
+          <button type="button" class="button" onclick="discrepancy(this)">No</button>
         </div>
         <label id="discLabel" for="discrepancyReason">Describe the Discrepancy:</label>
         <textarea id="discrepancyReason" cols="40" rows="3" value=""></textarea>
@@ -288,7 +288,7 @@
         <input type='number' id='expenseAmt' placeholder="$" autofocus required><br>
         <label for='expenseButtons'>Type of Expense</label>
         <div class="buttons" id="expense">
-          <button type="button" class="button selected" onclick="expense(this)">Gas</button>
+          <button type="button" class="button" onclick="expense(this)">Gas</button>
           <button type="button" class="button" onclick="expense(this)">Expense</button>
         </div>
         <label id="descLabel" for='expenseDescription'>Expense Description</label>
@@ -315,7 +315,7 @@
     
         <label for="mileage">Current Odometer</label>
         <input type="number" id="mileage">
-        <div class="buttons" id="logForm">
+        <div style="display: none;" class="buttons" id="logForm">
           <button type="button" class="button" onclick="submit('logOnForm')">Log On</button>
         </div>
       </div>
@@ -340,7 +340,11 @@
         
         document.getElementsByClassName('g-signin2')[0].style.display = 'none';
         document.getElementById('loginDiv').style.display = 'block';
-        google.script.run.withSuccessHandler(setDriverId).getDriverId(profile.getEmail());
+        Array.from(document.getElementsByClassName('tablinks')).forEach(function (tab) {
+          tab.style.display = 'block';
+        });
+        document.getElementById('logForm').style.display = 'block';
+        google.script.run.withSuccessHandler(setDriverId).getDriverId(profile.getEmail());        
       }
       
       function signOut() {
@@ -351,6 +355,10 @@
         document.getElementsByClassName('g-signin2')[0].style.display = 'block';
         document.getElementById('loginId').innerHTML = "";
         document.getElementById('loginDiv').style.display = 'none';
+        Array.from(document.getElementsByClassName('tablinks')).forEach(function (tab) {
+            tab.style.display = 'none';
+        });
+        document.getElementById('logForm').style.display = 'none';
       }
 
       function submit(formName) {
@@ -374,7 +382,7 @@
             if (button.innerHTML == "Yes" || button.innerHTML == "Expense") {
               description = form.getElementsByTagName('textarea')[0].value;
             }
-            else if (button.innerHTML == "Credit Card") {
+            else if (button.innerHTML == "Credit Card" || button.innerHTML == "Out of State Credit Card") {
               tip = inputs[2].value;
             }
           });
@@ -411,7 +419,6 @@
       }
       
       function submitted(formName) {
-      console.log(userId);
         var tab = document.getElementsByClassName(formName)[0];        
           
         if (formName == 'addFareForm') {
@@ -426,14 +433,13 @@
           tab.style.display = 'none';
         }
         else if (formName == 'logOnForm') {
-          openTab('login','addFare');
           if (document.getElementById('logon').innerHTML == 'Log On') {
             document.getElementById('logon').innerHTML = userId;
             document.getElementById('logForm').childNodes[1].innerHTML = 'Log Off ' + userId; 
           } else if (document.getElementById('logon').innerHTML == userId) {
             document.getElementById('logon').innerHTML = 'Log On';
             document.getElementById('logForm').childNodes[1].innerHTML = 'Log On'; 
-            setTimeout(signOut(),3000);
+            setTimeout(signOut(),2000);
           }
         }       
       }
@@ -444,6 +450,8 @@
         if (formName == 'addFareForm') {
           document.getElementById('submittedFare').style.opacity = 0;
           document.getElementById('resubmitFare').style.opacity = 0;
+          document.getElementById('discLabel').style.display = 'none';
+          document.getElementById('discrepancyReason').style.display = 'none';
         }
         else if (formName == 'addExpenseForm') {
           document.getElementById("receiptNotice").style.display = 'block';  
