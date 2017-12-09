@@ -3,241 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="180966977438-fqqes4kqp6dpr502v0btgnvt00f62u97.apps.googleusercontent.com">
     <title>Cab-Ease</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <style>
-      body {
-        margin: 0;
-        font-family: 'Open Sans', sans-serif;
-        background-color: #333;
-        color: #f2f2f2;
-      }
-      input[type=number]::-webkit-inner-spin-button, 
-      input[type=number]::-webkit-outer-spin-button { 
-        -webkit-appearance: none; 
-        margin: 0; 
-      }
-      /* Style the tab */
-      div.tab {
-        display: flex;
-        flex-flow: row wrap;
-          overflow: hidden;
-          border: 1px solid #ccc;
-          background-color: #f1f1f1;
-      }    
-      /* Style the buttons inside the tab */
-      div.tab button {
-        display: flex;
-          background-color: inherit;
-          border: none;
-          outline: none;
-          cursor: pointer;
-          padding: 16px 18px;
-          transition: 0.3s;
-          font-size: 3.4vw;
-      }      
-      /* Change background color of buttons on hover */
-      div.tab button:hover {
-          background-color: #ddd;
-      }      
-      /* Create an active/current tablink class */
-      div.tab button.active {
-          background-color: #ccc;
-      }      
-      /* Style the tab content */
-      .tabcontent {
-          display: none;
-          padding: 6px 12px;
-      }
-      .tabcontent#logOnOff {
-        display: block;
-      }       
-      .tablinks:nth-child(1) {
-        position: absolute;
-        right: 0;
-      } 
-      #table {
-        font-size: 25px;
-        text-align: left;
-        border-collapse: collapse;
-      }  
-      #table, td {
-        border: 2px solid #ccc;
-      }
-      #table th:nth-child(3) {
-        width: 100px;
-      }
-      #table tr {       
-        margin-bottom: 10px;  
-        padding: 10px 0px 10px 0px;
-      }      
-      #table tr:nth-child(even) {
-        background-color: black;
-        color: white;
-      }      
-      #table tr:hover {
-        background-color: grey;
-        color: black;
-        font-weight: bold;
-      }     
-      #table td,
-      #table th {
-        padding: 5px 20px 5px 20px;
-        margin: 0;
-      } 
-      #table input {
-        background-color: none;
-        width: 100%;
-        vertical-align: middle;
-      }   
-      #table input,
-      #table select {
-        font-size: 25px;
-      }
-      #table tr button {
-        height: 20px;
-      }           
-      .buttons .button{
-        background-color: grey;
-        border: 1px solid black;
-        color: white;
-        padding: 15px 32px;
-        margin: auto;
-        text-align: center;
-        text-decoration: none;
-        display: block;
-        font-size: 22px;
-        cursor: pointer;  
-        width: 100%;
-      }
-      .buttons .selected {
-        border: 1px solid grey;
-        background-color: black;
-      }
-      #discrepancy button,
-      #expense button{
-        width: 50%;
-        display: inline-block;
-        float: left;
-      }
-      #addFare {
-        text-align: left;
-        font-size: 2.8vw;
-      }
-      .addFareForm,
-      .addExpenseForm {
-        width: 50%;
-        margin: auto;
-      }
-      #discLabel,
-      #discrepancyReason,
-      #descLabel,
-      #expenseDescription,
-      #creditLabel,
-      #credit {
-        display: none;
-      }
-      #discrepancyReason {
-        height: 100px;
-        width: 100%;
-        text-align: left;
-        vertical-align: top;
-      }
-      #confirmation,
-      #fareAmt,
-      #expenseAmt,
-      #discrepancyReason,
-      #expenseDescription,
-      #credit {
-        margin: 0px;
-        font-size: 4vw;
-      }
-      label[for=confirmation],
-      label[for=buttons],
-      label[for=fareAmt],
-      label[for=credit] {
-        font-size: 4vw;
-        margin-bottom: 10px;
-      }
-      label[for=discrepancy],
-      label[for=discrepancyReason]{
-        font-size: 3vw;
-      }
-      #confirmation,
-      #fareAmt,
-      #credit,
-      #expenseAmt,
-      #buttons button:last-child,
-      #discrepancy button:last-child,
-      #expense button:last-child {
-        margin-bottom: 25px;
-      }
-      #addExpense label {
-        font-size: 4vw;
-      }
-      #discrepancyReason,
-      #expenseDescription {
-        width: 100%;
-      }
-      #fareSubmit,
-      #expenseSubmit {
-        margin: 40px auto 0px auto;
-        width: 50%;
-      }
-      #fareAmt,
-      #expenseAmt,
-      #credit {
-        width: 5em;
-      }  
-      .logOnForm label,
-      .logOnForm input,
-      #loginDiv {
-        font-size: 4vw;
-      }
-      .logOnForm,
-      .logOnForm input {
-        width: 40%;
-        margin: auto;
-      }
-      #login {
-        margin: 0px 0px 30px 0px;
-      }
-      #mileage {
-        margin-left: 5px;
-        margin-bottom: 50px;
-      }
-      #logForm button {
-        margin-left: 4px;
-      }      
-      #fareAmt,
-      label[for=fareAmt] {
-        display: block;
-        margin: 0px 0px 5px 0px;
-      }
-      #fareAmt {
-        margin: 0px 0px 25px 0px;
-      }      
-      #signout {
-        position: absolute;
-        top: 50%;
-        left: 10px;
-        width: 100px;
-        height: 100px;
-        color: #333;
-      }
-      div .abcRioButtonContentWrapper {
-        background-color: #555;
-      }
-      .g-signin2 {
-        margin-left: 5px;
-      }
-      .abcRioButtonContents span {
-        color: white;
-      }
-  </style>
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <link rel="stylesheet" href="https://rawgit.com/N8Sayer/gas-cabease/master/style.css">
   </head>
   <body>
     <div class="tab">
@@ -249,7 +17,7 @@
            
     <div class="tabcontent" id="addFare">
       <div class='addFareForm'>
-        <label for="confirmation">Confirmation #</label> <!-- <label for="confirmation">Required</label> -->
+        <label for="confirmation">Confirmation #</label> 
         <input id="confirmation" type='text' maxlength="11" autofocus required>
         <label for="fareAmt">Fare Amount</label><input id="fareAmt" type='number' placeholder="$" required>
         <label for="buttons">Fare Type</label>
@@ -257,17 +25,27 @@
           <button type="button" class="button" onclick="creditCheck(this)">Cash</button>
           <button type="button" class="button" onclick="creditCheck(this)">Account</button>
           <button type="button" class="button" onclick="creditCheck(this)">Credit Card</button>
+          <div id='creditOptions'>
+            <label id="creditLabel" for="credit">Credit Card Tip</label>
+            <input id="credit" type='number' placeholder="$">
+            <div class="buttons" id="stateCreditButtons">
+              <button type="button" class="button half" onclick="creditSelect('stateCreditButtons',this)">In State</button>
+              <button type="button" class="button half" onclick="creditSelect('stateCreditButtons',this)">Out of State</button>
+            </div>
+            <div class="buttons" id="paidCreditButtons">
+              <button type="button" class="button half" onclick="creditSelect('paidCreditButtons',this)">Paid - Car</button>
+              <button type="button" class="button half" onclick="creditSelect('paidCreditButtons',this)">Paid - Office</button>
+            </div> 
+          </div>
           <button type="button" class="button" onclick="creditCheck(this)">TARPS (Cash Only)</button>
           <button type="button" class="button" onclick="creditCheck(this)">Personal</button>
           <button type="button" class="button" onclick="creditCheck(this)">Out of State Cash</button>
-          <button type="button" class="button" onclick="creditCheck(this)">Out of State Credit Card</button>
           <button type="button" class="button" onclick="creditCheck(this)">Owner Fleet</button>
-        </div>
-        <label id="creditLabel" for="credit">Credit Card Tip</label><input id="credit" type='number' placeholder="$">
+        </div>        
         <label for="discrepancy">Was there a Fare Discrepancy?</label>
         <div class="buttons" id="discrepancy">
-          <button type="button" class="button" onclick="discrepancy(this)">Yes</button>
-          <button type="button" class="button selected" onclick="discrepancy(this)">No</button>
+          <button type="button" class="button half" onclick="discrepancy(this)">Yes</button>
+          <button type="button" class="button half selected" onclick="discrepancy(this)">No</button>
         </div>
         <label id="discLabel" for="discrepancyReason">Describe the Discrepancy:</label>
         <textarea id="discrepancyReason" cols="40" rows="3" value=""></textarea>
@@ -286,10 +64,10 @@
       <div class="addExpenseForm">
         <label for='expenseAmt'>Amount of Expense/Gas</label>
         <input type='number' id='expenseAmt' placeholder="$" autofocus required><br>
-        <label for='expenseButtons'>Type of Expense</label>
+        <label for='expense'>Type of Expense</label>
         <div class="buttons" id="expense">
-          <button type="button" class="button selected" onclick="expense(this)">Gas</button>
-          <button type="button" class="button" onclick="expense(this)">Expense</button>
+          <button type="button" class="button half selected" onclick="expense(this)">Gas</button>
+          <button type="button" class="button half" onclick="expense(this)">Expense</button>
         </div>
         <label id="descLabel" for='expenseDescription'>Expense Description</label>
         <textarea id='expenseDescription' rows="2" cols="55"></textarea>        
@@ -304,14 +82,8 @@
     </div>
     
     <div class="tabcontent" id="logOnOff">
-      
-      
       <div class="logOnForm">
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        <a id="signout" href="#" onclick="signOut()">Sign Out</a>
-        <div id='loginDiv' style='display: none;'> 
-          <span id="login">Driver ID </span><span id='loginId'></span>
-        </div>
+        <p id="login">Driver ID </p>
     
         <label for="mileage">Current Odometer</label>
         <input type="number" id="mileage">
@@ -325,363 +97,6 @@
       <h2 id="loading">Loading...</h2>
     </div>
     
-    <script>
-      var userId = "";
-      
-      function setDriverId(id) {
-        var pId = document.getElementById('loginId');
-        pId.innerHTML = id;
-        userId = id;
-      }
-      
-      function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log('Logged in as ' + profile.getEmail());
-        
-        document.getElementsByClassName('g-signin2')[0].style.display = 'none';
-        document.getElementById('loginDiv').style.display = 'block';
-        google.script.run.withSuccessHandler(setDriverId).getDriverId(profile.getEmail());
-      }
-      
-      function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-          console.log('User signed out.');
-        });
-        document.getElementsByClassName('g-signin2')[0].style.display = 'block';
-        document.getElementById('loginId').innerHTML = "";
-        document.getElementById('loginDiv').style.display = 'none';
-      }
-
-      function submit(formName) {
-        var tip = "";
-        var description = "";
-        var confirmationNum = "";
-        var fareAmt = "";
-        var fareType = "";
-        var expAmt = "";
-        var expType = "";
-        var log = "";
-        var mileage = "";
-        var output = [];
-        var date = new Date();
-        var form = document.getElementsByClassName(formName)[0];
-        var inputs = form.getElementsByTagName('input');
-        var selectedButtons = form.getElementsByClassName('selected');
-
-        if(selectedButtons) {
-          Array.from(selectedButtons).forEach(function(button) {
-            if (button.innerHTML == "Yes" || button.innerHTML == "Expense") {
-              description = form.getElementsByTagName('textarea')[0].value;
-            }
-            else if (button.innerHTML == "Credit Card") {
-              tip = inputs[2].value;
-            }
-          });
-        }
-        
-        switch(formName) {
-          case 'addFareForm':
-            var menuType = "Add Fare";
-            confirmationNum = inputs[0].value;
-            fareAmt = inputs[1].value;
-            fareType = selectedButtons[0].innerHTML;
-            inputs[0].value = "";
-            inputs[1].value = "";
-            inputs[2].value = "";
-            form.getElementsByTagName('textarea')[0].value = "";
-            break;
-          case 'addExpenseForm':
-            var menuType = "Add Expense/ Add Gas";
-            expAmt = inputs[0].value;
-            expType = selectedButtons[0].innerHTML;
-            inputs[0].value = "";
-            form.getElementsByTagName('textarea')[0].value = "";
-            break;
-          case 'logOnForm':
-            var menuType = 'Log On/ Log Off';
-            log = document.getElementById('logForm').childNodes[1].innerHTML;
-            mileage = inputs[0].value;
-            inputs[0].value = "";
-            break;
-        }
-        
-        output.push(userId,menuType,tip,confirmationNum,fareAmt,fareType,expAmt,expType,description,log,mileage);
-        google.script.run.withSuccessHandler(submitted(formName)).sheetUpdate(userId,output);
-      }
-      
-      function submitted(formName) {
-      console.log(userId);
-        var tab = document.getElementsByClassName(formName)[0];        
-          
-        if (formName == 'addFareForm') {
-          document.getElementById('submittedFare').style.opacity = 1;
-          document.getElementById('resubmitFare').style.opacity = 1;
-          tab.style.display = 'none';
-        }
-        else if (formName == 'addExpenseForm') {
-          document.getElementById("receiptNotice").style.display = 'none';  
-          document.getElementById('submittedExpense').style.opacity = 1;
-          document.getElementById('resubmitExpense').style.opacity = 1;
-          tab.style.display = 'none';
-        }
-        else if (formName == 'logOnForm') {
-          openTab('login','addFare');
-          if (document.getElementById('logon').innerHTML == 'Log On') {
-            document.getElementById('logon').innerHTML = userId;
-            document.getElementById('logForm').childNodes[1].innerHTML = 'Log Off ' + userId; 
-          } else if (document.getElementById('logon').innerHTML == userId) {
-            document.getElementById('logon').innerHTML = 'Log On';
-            document.getElementById('logForm').childNodes[1].innerHTML = 'Log On'; 
-            setTimeout(signOut(),3000);
-          }
-        }       
-      }
-      
-      function resubmit(formName) {
-        var tab = document.getElementsByClassName(formName)[0];        
-          
-        if (formName == 'addFareForm') {
-          document.getElementById('submittedFare').style.opacity = 0;
-          document.getElementById('resubmitFare').style.opacity = 0;
-        }
-        else if (formName == 'addExpenseForm') {
-          document.getElementById("receiptNotice").style.display = 'block';  
-          document.getElementById('submittedExpense').style.opacity = 0;
-          document.getElementById('resubmitExpense').style.opacity = 0;
-        }
-        
-        var buttons = document.getElementsByClassName(formName)[0].getElementsByClassName('button');
-        Array.from(buttons).forEach(function(eachButton) {
-          eachButton.className = "button";
-        });
-        
-        tab.style.display = 'block';
-      }
-      
-      function selected(buttonSet,button) {
-        Array.from(document.getElementById(buttonSet).children).forEach(function(eachButton) {
-          eachButton.className = "button";
-        });
-        button.className += " selected";
-        
-        return document.getElementById(buttonSet);
-      }
-      
-      function creditCheck(button) {
-        selected('buttons',button);
-       
-        if(button.innerHTML == "Credit Card" || button.innerHTML == "Out of State Credit Card") {
-          document.getElementById('creditLabel').style.display = 'block';
-          document.getElementById('credit').style.display = 'block'; 
-        }
-        else {
-          document.getElementById('creditLabel').style.display = 'none';
-          document.getElementById('credit').style.display = 'none';
-        }
-      }
-      
-      function discrepancy(button) {
-        selected('discrepancy',button);
-       
-        if(button.innerHTML == "Yes") {
-          document.getElementById('discLabel').style.display = 'block';
-          document.getElementById('discrepancyReason').style.display = 'block'; 
-        }
-        else if (button.innerHTML == "No") {
-          document.getElementById('discLabel').style.display = 'none';
-          document.getElementById('discrepancyReason').style.display = 'none';
-        }
-      }
-      
-      function expense(button) {
-        selected('expense',button);
-       
-        if(button.innerHTML == "Expense") {
-          document.getElementById('descLabel').style.display = 'block';
-          document.getElementById('expenseDescription').style.display = 'block'; 
-        }
-        else if (button.innerHTML == "Gas") {
-          document.getElementById('descLabel').style.display = 'none';
-          document.getElementById('expenseDescription').style.display = 'none';
-        }
-      }
-      
-      function noFare() {
-        var loading = document.getElementById('loading');
-        loading.style.display = 'none';
-        
-        var tab = document.getElementById('editFare');
-        var h = document.createElement('h1');
-        h.innerHTML = "Contact your Supervisor to make changes to your past Fares and Expenses.";
-        tab.appendChild(h);
-      }
-       
-      function editFare(stats) {
-        var tab = document.getElementById('editFare');
-        var overflow = document.createElement('div');
-        overflow.setAttribute('style', 'overflow-x: auto;');
-        tab.appendChild(overflow);
-        
-        var table = document.createElement('table');
-        var headers = ['Edit/Save','Timestamp','DriverID','EventType','Credit Card Tip','Confirmation#','FareAmt','FareType','Amt of Expense/ Gas','Expense Type','Description (Expense Only)','LogOn/ LogOff','Current Mileage'];
-       
-        if (stats.length === 0) {
-          noFare();
-        } 
-        else {
-          if (document.querySelector("div#editFare table")) {
-            document.getElementById('editFare').removeChild(document.getElementById('editFare').childNodes[2]);
-          }          
-          table.setAttribute('id',"table");
-          overflow.appendChild(table);
-                    
-          var tableHeaderRow = document.createElement('tr');
-          headers.forEach(function(col) {
-            var tableHeaders = document.createElement('th');
-            tableHeaders.innerHTML = col;
-            tableHeaderRow.appendChild(tableHeaders);
-          });  
-          table.appendChild(tableHeaderRow);
-          
-          stats.forEach(function (row,index) {
-            if (row[0] !== "") {
-              var tableRow = document.createElement('tr');
-              
-              var input = document.createElement('input');
-              input.setAttribute('type','button');
-              input.setAttribute('value','Edit');
-              input.setAttribute('onclick','editSave(this,'+ (index+1) +')');
-              
-              var tableInput = document.createElement('td');
-              tableInput.appendChild(input);
-              tableRow.appendChild(tableInput);
-              
-              row.forEach(function (col) {
-                var tableItem = document.createElement('td');
-                tableItem.innerHTML = col;
-                tableRow.appendChild(tableItem);
-              });
-              
-              table.appendChild(tableRow);
-            }
-          });
-        }
-        var loading = document.getElementById('loading');
-        loading.style.display = 'none';
-      }
-      
-      function editSave(button, tableRow) {
-        var row = document.getElementsByTagName('tr')[tableRow];
-        
-        var startNum = 0;
-        var endNum = 0;
-        
-        if (row.childNodes[3].innerHTML == "Add Fare") {
-          startNum = 4;
-          endNum = 7;
-        } else if (row.childNodes[3].innerHTML == "Log On/ Log Off") {
-          startNum = 11;
-          endNum = 12;
-        } else if (row.childNodes[3].innerHTML == "Add Expense/ Add Gas") {
-          startNum = 8;
-          endNum = 10;
-        }
-        
-        if (button.value == 'Edit') {
-          button.value = 'Save';
-          
-          for (var x=startNum; x<=endNum; x++) {
-            var id = row.childNodes[x];
-            var content = row.childNodes[x].innerHTML;
-            if (x === 7) {
-              var oldData = row.childNodes[x].innerHTML;
-              row.childNodes[x].innerHTML = '<select>' +
-                                              '<option value="Cash">Cash</option>' +
-                                              '<option value="Account">Account</option>' +
-                                              '<option value="Credit Card">Credit Card</option>' +
-                                              '<option value="TARPS (Cash Only)">TARPS (Cash Only)</option>' +
-                                              '<option value="Personal">Personal</option>' +
-                                              '<option value="Out of State Cash">Out of State Cash</option>' +
-                                              '<option value="Out of State Credit Card">Out of State Credit Card</option>' +
-                                              '<option value="Owner Fleet">Owner Fleet</option>' +
-                                            '</select>';
-              row.childNodes[x].childNodes[0].childNodes.forEach(function (option) {
-                if (option.value == oldData) {
-                  option.selected = true;
-                }
-              });
-            } 
-            else if (x === 9) {
-              var oldData = row.childNodes[x].innerHTML;
-              row.childNodes[x].innerHTML = '<select>' +
-                                              '<option value="Expense">Expense</option>' +
-                                              '<option value="Gas">Gas</option>' +
-                                            '</select>';
-              row.childNodes[x].childNodes[0].childNodes.forEach(function (option) {
-                if (option.value == oldData) {
-                  option.selected = true;
-                }
-              });
-            } 
-            else if (x === 11) {
-              var oldData = row.childNodes[x].innerHTML;
-              row.childNodes[x].innerHTML = '<select>' +
-                                              '<option value="Log On">Log On</option>' +
-                                              '<option value="Log Off">Log Off</option>' +
-                                            '</select>';
-              row.childNodes[x].childNodes[0].childNodes.forEach(function (option) {
-                if (option.value == oldData) {
-                  option.selected = true;
-                }
-              });
-            } else {
-              row.childNodes[x].innerHTML = '<input type="text" value="'+ content +'">';
-            }
-          }
-        }
-        else if (button.value == 'Save') {
-          button.value = 'Edit';
-          
-          for (var y=startNum; y<=endNum; y++) {
-            var id = row.childNodes[y];
-            var content = row.childNodes[y].innerHTML;            
-            var updated = id.childNodes[0].value;
-            row.childNodes[y].innerHTML = updated;
-          }
-          var output = [];
-          row.childNodes.forEach(function (item) {
-            output.push(item.innerHTML);
-          });
-          output.shift();
-          google.script.run.sheetUpdate(userId,output,row.childNodes[1].innerHTML);
-        }
-      }
-      
-      function openTab(evt, name) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(name).style.display = "block";
-        if (evt == 'login') {
-          tablinks[1].className += " active";
-        } else {
-          evt.currentTarget.className += " active";
-        }
-        if(name == 'editFare') {
-          google.script.run.withSuccessHandler(editFare).withFailureHandler(noFare).getPastFares(userId);
-        }
-        else {
-          var header = document.getElementById('editFare');
-          header.innerHTML = '<h2 id="loading">Loading...</h2>';
-        }
-      }
-    </script>
+    <script src="https://rawgit.com/N8Sayer/gas-cabease/master/functions.js"></script>
   </body>
 </html>

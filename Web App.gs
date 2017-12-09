@@ -5,16 +5,15 @@ function doGet(evt) {
 }
 
 function sheetUpdate(sheetName, data, editFare) {
-  Logger.log(sheetName);
   var date = new Date();
   var output = [];
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
-  var sheetData = sheet.getDataRange().getDisplayValues();
   var sheetRow = sheet.getLastRow();
   
   if (editFare !== "" && editFare !== undefined) {
     var findRow = 0;
-        
+    var sheetData = sheet.getDataRange().getDisplayValues();
+    
     sheetData.forEach(function (row,index) {
       if (row[0] == editFare) {
         findRow = index;
@@ -25,17 +24,7 @@ function sheetUpdate(sheetName, data, editFare) {
   } 
   else {
     data.unshift(date);
-    var duplicateEntry = false;
-    
-    sheetData.forEach(function (row) {
-      if (data[4] == row[4]) {
-        duplicateEntry = true;
-      }
-    });
-      
-    if (!duplicateEntry) {
-      sheet.getRange(sheetRow+1,1,1,data.length).setValues([data]);
-    }
+    sheet.getRange(sheetRow+1,1,1,data.length).setValues([data]);
   }
   sheet.sort(1, false);
 }
@@ -86,7 +75,7 @@ function getPastFares(agentId) {
     
     var formattedDate = new Date(dateObj[2],dateObj[0]-1,dateObj[1],timeObj[0],timeObj[1],timeObj[2]);
         
-    if (formattedDate >= dateMin && formattedDate <= dateMax) {
+    if (formattedDate.valueOf() >= dateMin.valueOf() && formattedDate.valueOf() <= dateMax.valueOf()) {
       output.push(data[x]); 
     }
   }
@@ -110,6 +99,10 @@ function getAgentPolicies(agentName) {
   return agentPolicies;
 }
 
+function getEmail() {
+  return Session.getActiveUser().getEmail();
+}
+
 function getDriverId(email) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('B:C').getDisplayValues();
   
@@ -118,4 +111,8 @@ function getDriverId(email) {
       return sheet[x][0]; 
     }
   }
+}
+
+function getId() {
+  return getDriverId(getEmail());
 }
