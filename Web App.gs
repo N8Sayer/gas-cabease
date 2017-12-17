@@ -1,7 +1,13 @@
 function doGet(evt) {
-    return HtmlService.createHtmlOutputFromFile('Operations')
+    return HtmlService.createHtmlOutputFromFile('LogIn')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      .setTitle('Cab-Ease'); 
+      .setTitle('Log-In');
+}
+
+function logOnSuccess() {
+  return HtmlService.createHtmlOutputFromFile('Operations')
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .setTitle('Cab-Ease');
 }
 
 function sheetUpdate(sheetName, data, editFare) {
@@ -9,11 +15,11 @@ function sheetUpdate(sheetName, data, editFare) {
   var output = [];
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   var sheetRow = sheet.getLastRow();
-  
+
   if (editFare !== "" && editFare !== undefined) {
     var findRow = 0;
     var sheetData = sheet.getDataRange().getDisplayValues();
-    
+
     sheetData.forEach(function (row,index) {
       if (row[0] == editFare) {
         findRow = index;
@@ -21,7 +27,7 @@ function sheetUpdate(sheetName, data, editFare) {
       }
     });
     sheet.getRange(findRow+1,1,1,data.length).setValues([data]);
-  } 
+  }
   else {
     data.unshift(date);
     sheet.getRange(sheetRow+1,1,1,data.length).setValues([data]);
@@ -34,7 +40,7 @@ function getPastFares(agentId) {
   var today = new Date();
   var dateMin = 0;
   var dateMax = 0;
-  
+
   switch (today.getDay()) {
     case 0:
       dateMin = new Date(today.getFullYear(),today.getMonth(),today.getDate()-7);
@@ -63,23 +69,23 @@ function getPastFares(agentId) {
     case 6:
       dateMin = new Date(today.getFullYear(),today.getMonth(),today.getDate()-6);
       dateMax = new Date(today.getFullYear(),today.getMonth(),today.getDate()+1,23,59,59);
-      break;    
+      break;
   }
-  
+
   var data = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(agentId).getDataRange().getDisplayValues();
-  
+
   for (var x=1; x<data.length; x++) {
     var unformattedDate = data[x][0].split(" ");
     var dateObj = unformattedDate[0].split("/");
     var timeObj = unformattedDate[1].split(":");
-    
+
     var formattedDate = new Date(dateObj[2],dateObj[0]-1,dateObj[1],timeObj[0],timeObj[1],timeObj[2]);
-        
+
     if (formattedDate.valueOf() >= dateMin.valueOf() && formattedDate.valueOf() <= dateMax.valueOf()) {
-      output.push(data[x]); 
+      output.push(data[x]);
     }
   }
-  
+
   if (output.length > 0) {
     return output;
   }
@@ -105,14 +111,26 @@ function getEmail() {
 
 function getDriverId(email) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('B:C').getDisplayValues();
-  
+
   for(var x=0; x<sheet.length; x++) {
     if(sheet[x][1] == email) {
-      return sheet[x][0]; 
+      return sheet[x][0];
     }
   }
 }
 
 function getId() {
   return getDriverId(getEmail());
+}
+
+function getLogIn(email,password) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('C:D').getDisplayValues();
+
+  var sheet = [['forcelord50@gmail.com','password123']];
+  sheet.forEach(function (driver) {
+    if (email == driver[0] && password == driver[1]) {
+      return true;
+    }
+  });
+  return false;
 }

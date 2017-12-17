@@ -1,220 +1,247 @@
 body {
-        margin: 0;
-        font-family: 'Open Sans', sans-serif;
-        background-color: #333;
-        color: #f2f2f2;
-      }
-      input[type=number]::-webkit-inner-spin-button, 
-      input[type=number]::-webkit-outer-spin-button { 
-        -webkit-appearance: none; 
-        margin: 0; 
-      }
-      /* Style the tab */
-      div.tab {
-        display: flex;
-        flex-flow: row wrap;
-          overflow: hidden;
-          border: 1px solid #ccc;
-          background-color: #f1f1f1;
-      }    
-      /* Style the buttons inside the tab */
-      div.tab button {
-        display: flex;
-          background-color: inherit;
-          border: none;
-          outline: none;
-          cursor: pointer;
-          padding: 16px 18px;
-          transition: 0.3s;
-          font-size: 3.4vw;
-      }      
-      /* Change background color of buttons on hover */
-      div.tab button:hover {
-          background-color: #ddd;
-      }      
-      /* Create an active/current tablink class */
-      div.tab button.active {
-          background-color: #ccc;
-      }      
-      /* Style the tab content */
-      .tabcontent {
-          display: none;
-          padding: 6px 12px;
-      }
-      .tabcontent#logOnOff {
-        display: block;
-      }       
-      .tablinks:nth-child(1) {
-        position: absolute;
-        right: 0;
-      } 
-      #table {
-        font-size: 25px;
-        text-align: left;
-        border-collapse: collapse;
-      }  
-      #table, td {
-        border: 2px solid #ccc;
-      }
-      #table th:nth-child(3) {
-        width: 100px;
-      }
-      #table tr {       
-        margin-bottom: 10px;  
-        padding: 10px 0px 10px 0px;
-      }      
-      #table tr:nth-child(even) {
-        background-color: black;
-        color: white;
-      }      
-      #table tr:hover {
-        background-color: grey;
-        color: black;
-        font-weight: bold;
-      }     
-      #table td,
-      #table th {
-        padding: 5px 20px 5px 20px;
-        margin: 0;
-      } 
-      #table input {
-        background-color: none;
-        width: 100%;
-        vertical-align: middle;
-      }   
-      #table input,
-      #table select {
-        font-size: 25px;
-      }
-      #table tr button {
-        height: 20px;
-      }           
-      .buttons .button {
-        background-color: grey;
-        border: 1px solid black;
-        color: white;
-        padding: 15px 32px;
-        margin: auto;
-        text-align: center;
-        text-decoration: none;
-        display: block;
-        font-size: 22px;
-        cursor: pointer;  
-        width: 100%;
-      }
-      .buttons .button:last {
-        margin-bottom: 25px;
-      }
-      .buttons .selected,
-      .buttons .creditSelected {
-        border: 1px solid grey;
-        background-color: black;
-      }
-      .buttons .half {
-        width: 50%;
-        height: 82px;
-        display: inline-block;
-        float: left;
-        font-size: 20px;
-      }
-      #addFare {
-        text-align: left;
-        font-size: 2.8vw;
-      }
-      .addFareForm,
-      .addExpenseForm {
-        width: 50%;
-        margin: auto;
-      }
-      #discLabel,
-      #discrepancyReason,
-      #descLabel,
-      #expenseDescription,
-      #creditOptions,
-      #credit {
-        display: none;
-      }
-      #discrepancyReason {
-        height: 100px;
-        width: 100%;
-        text-align: left;
-        vertical-align: top;
-      }
-      #confirmation,
-      #fareAmt,
-      #expenseAmt,
-      #discrepancyReason,
-      #expenseDescription,
-      #credit {
-        margin: 0px;
-        font-size: 4vw;
-      }
-      label[for=confirmation],
-      label[for=buttons],
-      label[for=fareAmt],
-      label[for=credit] {
-        font-size: 4vw;
-        margin-bottom: 10px;
-      }
-      label[for=discrepancy],
-      label[for=discrepancyReason]{
-        font-size: 3vw;
-      }
-      #confirmation,
-      #fareAmt,
-      #credit,
-      #expenseAmt,
-      #paidCreditButtons button,
-      #stateCreditButtons button,
-      #buttons button:last-child,
-      #discrepancy button:last-child,
-      #expense button:last-child {
-        margin-bottom: 25px;
-      }
-      #addExpense label {
-        font-size: 4vw;
-      }
-      #discrepancyReason,
-      #expenseDescription {
-        width: 100%;
-      }
-      #fareSubmit,
-      #expenseSubmit {
-        margin: 40px auto 0px auto;
-        width: 50%;
-      }
-      #fareAmt,
-      #expenseAmt,
-      #credit {
-        width: 5em;
-      }  
-      .logOnForm,
-      #mileage {
-        font-size: 4vw;
-        width: 40%;
-        margin: auto;
-      }
-      #login {
-        margin: 0px 0px 30px 0px;
-      }
-      #mileage {
-        margin-left: 5px;
-        margin-bottom: 50px;
-      }
-      #logForm button {
-        margin-left: 4px;
-      }      
-      #fareAmt,
-      label[for=fareAmt] {
-        display: block;
-        margin: 0px 0px 5px 0px;
-      }
-      #fareAmt {
-        margin: 0px 0px 25px 0px;
-      } 
-      #creditOptions {
-        width: 80%;
-        background-color: #333;
-        border: none;
-        text-align: left;
-      }
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #333;
+  color: #f2f2f2;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.logOff {
+  display: none; /* ------------------------------------------*/
+  position: absolute;
+  border: 1px solid black;
+  width: 100px;
+  height: 100px;
+  left: 0;
+  top: 50%;
+}
+.menu {
+  display: none; /* ---------------------------------------- */
+  position: fixed;
+  right: 0;
+  padding: 15px 18px;
+  transition: 0.3s;
+  font-size: 3.3vw;
+  border: none;
+  z-index: 5;
+}
+/* Style the tab */
+.tab {
+  /*display: none;----------------------------------------*/
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  display: flex;
+  flex-flow: row wrap;
+}
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 16px 18px;
+  transition: 0.3s;
+  font-size: 3.4vw;
+}
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+}
+/*.tabcontent#logOnOff {
+  display: block;
+}*/
+#table {
+  font-size: 25px;
+  text-align: left;
+  border-collapse: collapse;
+}
+#table, td {
+  border: 2px solid #ccc;
+}
+#table th:nth-child(3) {
+  width: 100px;
+}
+#table tr {
+  margin-bottom: 10px;
+  padding: 10px 0px 10px 0px;
+}
+#table tr:nth-child(even) {
+  background-color: black;
+  color: white;
+}
+#table tr:hover {
+  background-color: grey;
+  color: black;
+  font-weight: bold;
+}
+#table td,
+#table th {
+  padding: 5px 20px 5px 20px;
+  margin: 0;
+}
+#table input {
+  background-color: none;
+  width: 100%;
+  vertical-align: middle;
+}
+#table input,
+#table select {
+  font-size: 25px;
+}
+#table tr button {
+  height: 20px;
+}
+.buttons .button {
+  background-color: grey;
+  border: 1px solid black;
+  color: white;
+  padding: 15px 32px;
+  margin: auto;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 22px;
+  cursor: pointer;
+  width: 100%;
+}
+.buttons .button:last {
+  margin-bottom: 25px;
+}
+.buttons .selected,
+.buttons .creditSelected {
+  border: 1px solid grey;
+  background-color: black;
+}
+.buttons .half {
+  width: 50%;
+  height: 82px;
+  display: inline-block;
+  float: left;
+  font-size: 20px;
+}
+.buttons .half-cc {
+  width: 50%;
+  height: 82px;
+  display: inline-block;
+  float: left;
+  font-size: 20px;
+}
+#addFare {
+  text-align: left;
+  font-size: 2.8vw;
+}
+.addFareForm,
+.addExpenseForm,
+.logOnForm {
+  width: 50%;
+  margin: auto;
+}
+#discLabel,
+#discrepancyReason,
+#descLabel,
+#expenseDescription,
+#creditOptions,
+#credit {
+  display: none;
+}
+#discrepancyReason {
+  height: 100px;
+  width: 100%;
+  text-align: left;
+  vertical-align: top;
+}
+#confirmation,
+#fareAmt,
+#expenseAmt,
+#discrepancyReason,
+#expenseDescription,
+#credit {
+  margin: 0px;
+  font-size: 4vw;
+}
+label[for=confirmation],
+label[for=buttons],
+label[for=fareAmt],
+label[for=credit] {
+  font-size: 4vw;
+  margin-bottom: 10px;
+}
+label[for=discrepancy],
+label[for=discrepancyReason]{
+  font-size: 3vw;
+}
+#confirmation,
+#fareAmt,
+#credit,
+#expenseAmt,
+#paidCreditButtons button,
+#stateCreditButtons button,
+#buttons button:last-child,
+#discrepancy button:last-child,
+#expense button:last-child {
+  margin-bottom: 25px;
+}
+#addExpense label {
+  font-size: 4vw;
+}
+#discrepancyReason,
+#expenseDescription {
+  width: 100%;
+}
+#fareSubmit,
+#expenseSubmit {
+  margin: 40px auto 0px auto;
+  width: 50%;
+}
+#fareAmt,
+#expenseAmt,
+#credit {
+  width: 5em;
+}
+.logOnForm {
+  font-size: 4vw;
+  margin: auto;
+}
+.logOnForm input {
+  font-size: inherit;
+  margin-bottom: 10px;
+}
+.logOnForm label {
+  margin-bottom: 10px;
+}
+#login {
+  margin: 0px 0px 30px 0px;
+}
+#mileage {
+  margin-bottom: 15%;
+}
+#logForm button {
+  margin-left: 4px;
+}
+#fareAmt,
+label[for=fareAmt] {
+  display: block;
+  margin: 0px 0px 5px 0px;
+}
+#fareAmt {
+  margin: 0px 0px 25px 0px;
+}
+#creditOptions {
+  width: 80%;
+  background-color: #333;
+  border: none;
+  text-align: left;
+}

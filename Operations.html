@@ -5,19 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cab-Ease</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="https://rawgit.com/N8Sayer/gas-cabease/master/style.css">
+    <!-- <link rel="stylesheet" href="https://rawgit.com/N8Sayer/gas-cabease/master/style.css"> -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
   </head>
   <body>
+    <button type='button' class='menu' value="false" onclick='toggleMenu(this.value)'>&#9776;</button>
     <div class="tab">
-      <button class="tablinks active" id="logon" onclick="openTab(event,'logOnOff')">Log On</button>
       <button class="tablinks" id="newFare" onclick="openTab(event,'addFare')">Add Fare</button>
-      <button class="tablinks" id="newExpense" onclick="openTab(event,'addExpense')">Add Expense/Gas</button>      
+      <button class="tablinks" id="newExpense" onclick="openTab(event,'addExpense')">Add Expense/Gas</button>
       <button class="tablinks" id="changeFare" onclick="openTab(event,'editFare')">Edit Fare</button>
+      <button class="tablinks active" id="logon" onclick="openTab(event,'logOnOff')">Log On</button>
     </div>
-           
+
     <div class="tabcontent" id="addFare">
       <div class='addFareForm'>
-        <label for="confirmation">Confirmation #</label> 
+        <label for="confirmation">Confirmation #</label>
         <input id="confirmation" type='text' maxlength="11" autofocus required>
         <label for="fareAmt">Fare Amount</label><input id="fareAmt" type='number' placeholder="$" required>
         <label for="buttons">Fare Type</label>
@@ -29,19 +32,19 @@
             <label id="creditLabel" for="credit">Credit Card Tip</label>
             <input id="credit" type='number' placeholder="$">
             <div class="buttons" id="stateCreditButtons">
-              <button type="button" class="button half" onclick="creditSelect('stateCreditButtons',this)">In State</button>
-              <button type="button" class="button half" onclick="creditSelect('stateCreditButtons',this)">Out of State</button>
+              <button type="button" class="button half-cc" onclick="creditSelect('stateCreditButtons',this)">In State</button>
+              <button type="button" class="button half-cc" onclick="creditSelect('stateCreditButtons',this)">Out of State</button>
             </div>
             <div class="buttons" id="paidCreditButtons">
-              <button type="button" class="button half" onclick="creditSelect('paidCreditButtons',this)">Paid - Car</button>
-              <button type="button" class="button half" onclick="creditSelect('paidCreditButtons',this)">Paid - Office</button>
-            </div> 
+              <button type="button" class="button half-cc" onclick="creditSelect('paidCreditButtons',this)">Paid in Car</button>
+              <button type="button" class="button half-cc" onclick="creditSelect('paidCreditButtons',this)">Paid in Office</button>
+            </div>
           </div>
           <button type="button" class="button" onclick="creditCheck(this)">TARPS (Cash Only)</button>
           <button type="button" class="button" onclick="creditCheck(this)">Personal</button>
           <button type="button" class="button" onclick="creditCheck(this)">Out of State Cash</button>
           <button type="button" class="button" onclick="creditCheck(this)">Owner Fleet</button>
-        </div>        
+        </div>
         <label for="discrepancy">Was there a Fare Discrepancy?</label>
         <div class="buttons" id="discrepancy">
           <button type="button" class="button half" onclick="discrepancy(this)">Yes</button>
@@ -51,14 +54,14 @@
         <textarea id="discrepancyReason" cols="40" rows="3" value=""></textarea>
         <div class="buttons" id="fareSubmit">
           <button type="button" class="button" onclick="submit('addFareForm')">Submit</button>
-        </div> 
+        </div>
       </div>
       <p id="submittedFare" style="opacity: 0; transition: opacity .75s; text-align: center; font-size: 40px;">Submitted Fare</p>
       <div class="buttons">
         <button id="resubmitFare" style="opacity: 0; width: 33%; transition: opacity .35s ease-in-out; transition-delay: 1s;" type="button" class="button" onclick="resubmit('addFareForm')">Submit Another Fare</button>
       </div>
     </div>
-    
+
     <div class="tabcontent" id="addExpense">
       <h2 id="receiptNotice" style="text-align: center">Receipt MUST be included to get credit for Expense</h2>
       <div class="addExpenseForm">
@@ -70,7 +73,7 @@
           <button type="button" class="button half" onclick="expense(this)">Expense</button>
         </div>
         <label id="descLabel" for='expenseDescription'>Expense Description</label>
-        <textarea id='expenseDescription' rows="2" cols="55"></textarea>        
+        <textarea id='expenseDescription' rows="2" cols="55"></textarea>
         <div class="buttons" id="expenseSubmit">
           <button type="button" class="button" onclick="submit('addExpenseForm')">Submit</button>
         </div>
@@ -80,23 +83,25 @@
         <button id="resubmitExpense" style="opacity: 0; width: 33%; transition: opacity .35s ease-in-out; transition-delay: 1s;" type="button" class="button" onclick="resubmit('addExpenseForm')">Submit Another Expense</button>
       </div>
     </div>
-    
+
     <div class="tabcontent" id="logOnOff">
       <div class="logOnForm">
-        <p id="login">Driver ID </p>
-    
-        <label for="mileage">Current Odometer</label>
+        <label for='vehicle'>Vehicle #: </label>
+        <input type='number' id='vehicle' autocomplete='on'>
+        <label for="mileage">Odometer: </label>
         <input type="number" id="mileage">
         <div class="buttons" id="logForm">
           <button type="button" class="button" onclick="submit('logOnForm')">Log On</button>
         </div>
+        <button type='button' class='logOff' onclick='logOff'></button>
       </div>
     </div>
-    
+
     <div class="tabcontent" id="editFare">
       <h2 id="loading">Loading...</h2>
     </div>
-    
-    <script src="https://rawgit.com/N8Sayer/gas-cabease/master/functions.js"></script>
+
+    <!-- <script src="https://rawgit.com/N8Sayer/gas-cabease/master/functions.js"></script> -->
+    <script src="functions.js"></script>
   </body>
 </html>

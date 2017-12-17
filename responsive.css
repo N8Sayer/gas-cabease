@@ -1,0 +1,32 @@
+@media screen and (max-width: 768px) {
+  .tablinks {
+    display: none;
+    z-index: 2;
+  }
+  .tab {
+    flex-flow: column wrap;
+    border: none;
+    position: absolute;
+    width: 40%;
+    right: 0px;
+    top: 0px;
+  }
+  .buttons .button {
+    font-size: 3.6vw;
+    padding: 5% 10%;
+  }
+  .buttons .half {
+    height: auto;
+  }
+  .buttons .half-cc {
+    height: 10vh;
+  }
+}
+@media screen and (min-width: 769px) {
+  .menu {
+    display: none;
+  }
+  .tab {
+    justify-content: space-between;
+  }
+}
