@@ -134,3 +134,7 @@ function getLogIn(email,password) {
   });
   return false;
 }
+
+
+// NOTE TO SELF
+// NEED TO PASS THROUGH THE EMAIL FROM THE LOG-IN PAGE SOMEHOW. PREFERABLY LOADED AS A PARAMETER, BUT IDK YET.
