@@ -10,7 +10,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 .logOff {
-  display: none; /* ------------------------------------------*/
+  display: none;
   position: absolute;
   border: 1px solid black;
   width: 100px;
@@ -19,7 +19,6 @@ input[type=number]::-webkit-outer-spin-button {
   top: 50%;
 }
 .menu {
-  display: none; /* ---------------------------------------- */
   position: fixed;
   right: 0;
   padding: 15px 18px;
@@ -30,7 +29,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 /* Style the tab */
 .tab {
-  /*display: none;----------------------------------------*/
+  display: none;
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
@@ -60,9 +59,9 @@ input[type=number]::-webkit-outer-spin-button {
     display: none;
     padding: 6px 12px;
 }
-/*.tabcontent#logOnOff {
+.tabcontent#logOnOff {
   display: block;
-}*/
+}
 #table {
   font-size: 25px;
   text-align: left;
