@@ -1,6 +1,3 @@
-var userId = "";
-google.script.run.withSuccessHandler(setDriverId).getId();
-
 function setDriverId(id) {
   var span = document.getElementById('login');
   var spanId = document.createElement('span');
@@ -340,10 +337,10 @@ function openTab(evt, name) {
   tablinks = document.getElementsByClassName("tablinks");
   for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
-      // if (window.screen.width < 769) {
-      //   tablinks[i].style.display = 'none';
-      //   document.getElementsByClassName('menu')[0].value = 'false';
-      // }
+      if (window.screen.width < 769) {
+        tablinks[i].style.display = 'none';
+        document.getElementsByClassName('menu')[0].value = 'false';
+      }
   }
   document.getElementById(name).style.display = "block";
   if (evt == 'login') {
