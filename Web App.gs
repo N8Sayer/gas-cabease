@@ -1,13 +1,9 @@
 function doGet(evt) {
-    return HtmlService.createHtmlOutputFromFile('LogIn')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      .setTitle('Log-In');
-}
-
-function logOnSuccess() {
-  return HtmlService.createHtmlOutputFromFile('Operations')
+  var email = evt.parameter['email'].toLowerCase();
+  var htmlOutput = HtmlService.createHtmlOutputFromFile('Operations')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .setTitle('Cab-Ease');
+    .setTitle('Cab-Ease Dev');
+  return htmlOutput.append('<script> var driverEmail = "'+email+'";</script>');
 }
 
 function sheetUpdate(sheetName, data, editFare) {
@@ -125,16 +121,12 @@ function getId() {
 
 function getLogIn(email,password) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('C:D').getDisplayValues();
-
-  var sheet = [['forcelord50@gmail.com','password123']];
+  
   sheet.forEach(function (driver) {
+    Logger.log(driver);
     if (email == driver[0] && password == driver[1]) {
       return true;
     }
   });
   return false;
 }
-
-
-// NOTE TO SELF
-// NEED TO PASS THROUGH THE EMAIL FROM THE LOG-IN PAGE SOMEHOW. PREFERABLY LOADED AS A PARAMETER, BUT IDK YET.

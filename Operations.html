@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cab-Ease</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="https://rawgit.com/N8Sayer/gas-cabease/master/style.css"> -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="responsive.css">``
+    <link rel="stylesheet" href="https://cdn.rawgit.com/N8Sayer/gas-cabease/28b14dee/style-dev.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/N8Sayer/gas-cabease/28b14dee/responsive-dev.css">
   </head>
   <body>
     <button type='button' class='menu' value="false" onclick='toggleMenu(this.value)'>&#9776;</button>
@@ -16,7 +15,6 @@
       <button class="tablinks" id="newExpense" onclick="openTab(event,'addExpense')">Add Expense/Gas</button>
       <button class="tablinks" id="changeFare" onclick="openTab(event,'editFare')">Edit Fare</button>
       <button class="tablinks active" id="logon" onclick="openTab(event,'logOnOff')">Log On</button>
-      <button type='button' class='logOff' onclick='logOff'></button>
     </div>
 
     <div class="tabcontent" id="addFare">
@@ -94,6 +92,7 @@
         <div class="buttons" id="logForm">
           <button type="button" class="button" onclick="submit('logOnForm')">Log On</button>
         </div>
+        <button type='button' class='logOff' onclick='logOff'></button>
       </div>
     </div>
 
@@ -101,7 +100,6 @@
       <h2 id="loading">Loading...</h2>
     </div>
 
-    <!-- <script src="https://rawgit.com/N8Sayer/gas-cabease/master/functions.js"></script> -->
-    <script src="functions.js"></script>
+    <script src="https://cdn.rawgit.com/N8Sayer/gas-cabease/28b14dee/functions-dev.js"></script>
   </body>
 </html>
