@@ -340,10 +340,10 @@ function openTab(evt, name) {
   tablinks = document.getElementsByClassName("tablinks");
   for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
-      if (window.screen.width < 769) {
-        tablinks[i].style.display = 'none';
-        document.getElementsByClassName('menu')[0].value = 'false';
-      }
+      // if (window.screen.width < 769) {
+      //   tablinks[i].style.display = 'none';
+      //   document.getElementsByClassName('menu')[0].value = 'false';
+      // }
   }
   document.getElementById(name).style.display = "block";
   if (evt == 'login') {
@@ -368,13 +368,11 @@ function toggleMenu(state) {
       menuItem.style.display = 'none';
     });
     button.value = "false";
-    // document.getElementsByClassName('tab')[0].style.justifyContent = 'flex-end';
   }
   else if (state == "false") {
     Array.from(menu).forEach(function (menuItem) {
       menuItem.style.display = 'flex';
     });
     button.value = "true";
-    // document.getElementsByClassName('tab')[0].style.justifyContent = 'space-between';
   }
 }
