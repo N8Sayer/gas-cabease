@@ -1,9 +1,7 @@
-var userId = google.script.run.getDriverId(driverEmail);
+var userId = "";
+google.script.run.withSuccessHandler(setDriverId).getDriverId(driverEmail);
+
 function setDriverId(id) {
-  var span = document.getElementById('login');
-  var spanId = document.createElement('span');
-  spanId.innerHTML = id;
-  span.appendChild(spanId);
   userId = id;
 }
 
