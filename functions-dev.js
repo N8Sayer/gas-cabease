@@ -1,3 +1,4 @@
+var userId = google.script.run.getDriverId(driverEmail);
 function setDriverId(id) {
   var span = document.getElementById('login');
   var spanId = document.createElement('span');
