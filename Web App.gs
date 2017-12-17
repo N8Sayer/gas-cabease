@@ -110,10 +110,10 @@ function getEmail() {
 }
 
 function getDriverId(email) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('B:C').getDisplayValues();
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('C:C').getDisplayValues();
 
   for(var x=0; x<sheet.length; x++) {
-    if(sheet[x][1] == email) {
+    if(sheet[x][0] == email) {
       return sheet[x][0];
     }
   }
