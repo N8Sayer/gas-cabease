@@ -125,8 +125,6 @@ function getId() {
 
 function getLogIn(email,password) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('C:D').getDisplayValues();
-
-  var sheet = [['forcelord50@gmail.com','password123']];
   sheet.forEach(function (driver) {
     if (email == driver[0] && password == driver[1]) {
       return true;
@@ -134,7 +132,3 @@ function getLogIn(email,password) {
   });
   return false;
 }
-
-
-// NOTE TO SELF
-// NEED TO PASS THROUGH THE EMAIL FROM THE LOG-IN PAGE SOMEHOW. PREFERABLY LOADED AS A PARAMETER, BUT IDK YET.

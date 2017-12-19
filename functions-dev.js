@@ -1,4 +1,3 @@
-var userId = "";
 google.script.run.withSuccessHandler(setDriverId).getDriverId(driverEmail);
 
 function setDriverId(id) {
