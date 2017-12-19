@@ -1,5 +1,6 @@
+console.log(driverEmail);
 google.script.run.withSuccessHandler(setDriverId).getDriverId(driverEmail);
-
+console.log(userId);
 function setDriverId(id) {
   userId = id;
   var p = document.createElement('p');
