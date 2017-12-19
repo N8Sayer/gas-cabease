@@ -375,7 +375,7 @@ function toggleMenu(state) {
     button.value = "true";
   }
 }
-
+ 
 function verifyDriver(form) {
   document.getElementById('warning').innerHTML = "";
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
