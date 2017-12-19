@@ -1,11 +1,7 @@
-var driverEmail = document.getElementById('driverEmail').innerHTML;
 google.script.run.withSuccessHandler(setDriverId).getDriverId(driverEmail);
 
 function setDriverId(id) {
   userId = id;
-  var p = document.createElement('p');
-  p.innerHTML = id;
-  document.getElementById('logOnOff').appendChild(p);
 }
 
 function submit(formName) {
@@ -375,7 +371,7 @@ function toggleMenu(state) {
     button.value = "true";
   }
 }
- 
+
 function verifyDriver(form) {
   document.getElementById('warning').innerHTML = "";
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
