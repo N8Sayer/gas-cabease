@@ -1,7 +1,10 @@
-google.script.run.withSuccessHandler(setDriverId).getDriverId(driverEmail); 
+google.script.run.withSuccessHandler(setDriverId).getDriverId(driverEmail);
 
 function setDriverId(id) {
   userId = id;
+  var p = document.createElement('p');
+  p.innerHTML = id;
+  document.getElementById('logOnOff').appendChild(p);
 }
 
 function submit(formName) {
