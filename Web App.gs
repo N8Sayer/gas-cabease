@@ -1,13 +1,9 @@
 function doGet(evt) {
-    return HtmlService.createHtmlOutputFromFile('LogIn')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      .setTitle('Log-In');
-}
-
-function logOnSuccess() {
-  return HtmlService.createHtmlOutputFromFile('Operations')
+  var email = evt.parameter['email'].toLowerCase();
+  var htmlOutput = HtmlService.createHtmlOutputFromFile('Operations')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .setTitle('Cab-Ease');
+    .setTitle('Cab-Ease Dev');
+  return htmlOutput.append('<script> var driverEmail = "'+email+'";</script>');
 }
 
 function sheetUpdate(sheetName, data, editFare) {
@@ -125,10 +121,19 @@ function getId() {
 
 function getLogIn(email,password) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('C:D').getDisplayValues();
+<<<<<<< HEAD
+=======
+  
+>>>>>>> origin/master
   sheet.forEach(function (driver) {
+    Logger.log(driver);
     if (email == driver[0] && password == driver[1]) {
       return true;
     }
   });
   return false;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/master
