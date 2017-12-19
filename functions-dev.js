@@ -1,4 +1,4 @@
-google.script.run.withSuccessHandler(setDriverId).getDriverId(driverEmail);
+google.script.run.withSuccessHandler(setDriverId).getDriverId(driverEmail); 
 
 function setDriverId(id) {
   userId = id;
