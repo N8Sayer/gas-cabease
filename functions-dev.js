@@ -1,4 +1,4 @@
-var driverEmail = document.getElementById('driverEmail').value;
+var driverEmail = document.getElementById('driverEmail').innerHTML;
 google.script.run.withSuccessHandler(setDriverId).getDriverId(driverEmail);
 
 function setDriverId(id) {
@@ -374,4 +374,39 @@ function toggleMenu(state) {
     });
     button.value = "true";
   }
+}
+
+function verifyDriver(form) {
+  document.getElementById('warning').innerHTML = "";
+  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+  var email = form.email.value;
+  var password = form.password.value;
+  // Conditions
+  if (password != '' && email != '') {
+    console.log('notblank');
+    if (email.match(emailReg)) {
+      console.log('email valid');
+      google.script.run.withSuccessHandler(validTrue).getLogIn(email.toLowerCase(),password);
+      function validTrue(truthy) {
+        if (truthy) {
+          console.log('valid user');
+          var driverEmail = email;
+          showPage();
+        }
+        else if (!truthy) {
+          document.getElementById('warning').innerHTML = "That is not a valid email address and/or password";
+        }
+      }
+    } else {
+      document.getElementById('warning').innerHTML = "Please enter a valid email address";
+    }
+  }
+  else {
+    document.getElementById('warning').innerHTML = "All fields are required";
+  }
+}
+
+function showPage() {
+  document.getElementsByClassName('walled')[0].style.display = 'block';
+  document.getElementsByClassName('verify')[0].style.display = 'none';
 }

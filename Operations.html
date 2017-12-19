@@ -5,112 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cab-Ease</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-<<<<<<< HEAD
-    <!-- <link rel="stylesheet" href="https://rawgit.com/N8Sayer/gas-cabease/master/style.css"> -->
-    <link rel="stylesheet" href="style-dev.css">
-    <link rel="stylesheet" href="responsive-dev.css">
-=======
     <link rel="stylesheet" href="https://cdn.rawgit.com/N8Sayer/gas-cabease/28b14dee/style-dev.css">
     <link rel="stylesheet" href="https://cdn.rawgit.com/N8Sayer/gas-cabease/28b14dee/responsive-dev.css">
->>>>>>> origin/master
   </head>
   <body>
-    <button type='button' class='menu' value="false" onclick='toggleMenu(this.value)'>&#9776;</button>
-    <div class="tab">
-      <button class="tablinks" id="newFare" onclick="openTab(event,'addFare')">Add Fare</button>
-      <button class="tablinks" id="newExpense" onclick="openTab(event,'addExpense')">Add Expense/Gas</button>
-      <button class="tablinks" id="changeFare" onclick="openTab(event,'editFare')">Edit Fare</button>
-      <button class="tablinks active" id="logon" onclick="openTab(event,'logOnOff')">Log On</button>
-    </div>
+    <form class='verify'>
+      <label for='email'>Email Address</label>
+      <input type='email' id="email" autocomplete='on' placeholder='BW Gmail Address'>
+      <label for='password'>Password</label>
+      <input type='password' id='password' autocomplete='on'>
+      <span id='warning'></span>
+      <input type='button' class='buttons' value='Verify Driver' onclick='verifyDriver(this.form)'>
+    </form>
 
-    <div class="tabcontent" id="addFare">
-      <div class='addFareForm'>
-        <label for="confirmation">Confirmation #</label>
-        <input id="confirmation" type='text' maxlength="11" autofocus required>
-        <label for="fareAmt">Fare Amount</label><input id="fareAmt" type='number' placeholder="$" required>
-        <label for="buttons">Fare Type</label>
-        <div class="buttons" id="buttons">
-          <button type="button" class="button" onclick="creditCheck(this)">Cash</button>
-          <button type="button" class="button" onclick="creditCheck(this)">Account</button>
-          <button type="button" class="button" onclick="creditCheck(this)">Credit Card</button>
-          <div id='creditOptions'>
-            <label id="creditLabel" for="credit">Credit Card Tip</label>
-            <input id="credit" type='number' placeholder="$">
-            <div class="buttons" id="stateCreditButtons">
-              <button type="button" class="button half-cc" onclick="creditSelect('stateCreditButtons',this)">In State</button>
-              <button type="button" class="button half-cc" onclick="creditSelect('stateCreditButtons',this)">Out of State</button>
+    <div class='walled'>
+      <button type='button' class='menu' value="false" onclick='toggleMenu(this.value)'>&#9776;</button>
+      <div class="tab">
+        <button class="tablinks" id="newFare" onclick="openTab(event,'addFare')">Add Fare</button>
+        <button class="tablinks" id="newExpense" onclick="openTab(event,'addExpense')">Add Expense/Gas</button>
+        <button class="tablinks" id="changeFare" onclick="openTab(event,'editFare')">Edit Fare</button>
+        <button class="tablinks active" id="logon" onclick="openTab(event,'logOnOff')">Log On</button>
+      </div>
+
+      <div class="tabcontent" id="addFare">
+        <div class='addFareForm'>
+          <label for="confirmation">Confirmation #</label>
+          <input id="confirmation" type='text' maxlength="11" autofocus required>
+          <label for="fareAmt">Fare Amount</label><input id="fareAmt" type='number' placeholder="$" required>
+          <label for="buttons">Fare Type</label>
+          <div class="buttons" id="buttons">
+            <button type="button" class="button" onclick="creditCheck(this)">Cash</button>
+            <button type="button" class="button" onclick="creditCheck(this)">Account</button>
+            <button type="button" class="button" onclick="creditCheck(this)">Credit Card</button>
+            <div id='creditOptions'>
+              <label id="creditLabel" for="credit">Credit Card Tip</label>
+              <input id="credit" type='number' placeholder="$">
+              <div class="buttons" id="stateCreditButtons">
+                <button type="button" class="button half-cc" onclick="creditSelect('stateCreditButtons',this)">In State</button>
+                <button type="button" class="button half-cc" onclick="creditSelect('stateCreditButtons',this)">Out of State</button>
+              </div>
+              <div class="buttons" id="paidCreditButtons">
+                <button type="button" class="button half-cc" onclick="creditSelect('paidCreditButtons',this)">Paid in Car</button>
+                <button type="button" class="button half-cc" onclick="creditSelect('paidCreditButtons',this)">Paid in Office</button>
+              </div>
             </div>
-            <div class="buttons" id="paidCreditButtons">
-              <button type="button" class="button half-cc" onclick="creditSelect('paidCreditButtons',this)">Paid in Car</button>
-              <button type="button" class="button half-cc" onclick="creditSelect('paidCreditButtons',this)">Paid in Office</button>
-            </div>
+            <button type="button" class="button" onclick="creditCheck(this)">TARPS (Cash Only)</button>
+            <button type="button" class="button" onclick="creditCheck(this)">Personal</button>
+            <button type="button" class="button" onclick="creditCheck(this)">Out of State Cash</button>
+            <button type="button" class="button" onclick="creditCheck(this)">Owner Fleet</button>
           </div>
-          <button type="button" class="button" onclick="creditCheck(this)">TARPS (Cash Only)</button>
-          <button type="button" class="button" onclick="creditCheck(this)">Personal</button>
-          <button type="button" class="button" onclick="creditCheck(this)">Out of State Cash</button>
-          <button type="button" class="button" onclick="creditCheck(this)">Owner Fleet</button>
+          <label for="discrepancy">Was there a Fare Discrepancy?</label>
+          <div class="buttons" id="discrepancy">
+            <button type="button" class="button half" onclick="discrepancy(this)">Yes</button>
+            <button type="button" class="button half selected" onclick="discrepancy(this)">No</button>
+          </div>
+          <label id="discLabel" for="discrepancyReason">Describe the Discrepancy:</label>
+          <textarea id="discrepancyReason" cols="40" rows="3" value=""></textarea>
+          <div class="buttons" id="fareSubmit">
+            <button type="button" class="button" onclick="submit('addFareForm')">Submit</button>
+          </div>
         </div>
-        <label for="discrepancy">Was there a Fare Discrepancy?</label>
-        <div class="buttons" id="discrepancy">
-          <button type="button" class="button half" onclick="discrepancy(this)">Yes</button>
-          <button type="button" class="button half selected" onclick="discrepancy(this)">No</button>
-        </div>
-        <label id="discLabel" for="discrepancyReason">Describe the Discrepancy:</label>
-        <textarea id="discrepancyReason" cols="40" rows="3" value=""></textarea>
-        <div class="buttons" id="fareSubmit">
-          <button type="button" class="button" onclick="submit('addFareForm')">Submit</button>
+        <p id="submittedFare" style="opacity: 0; transition: opacity .75s; text-align: center; font-size: 40px;">Submitted Fare</p>
+        <div class="buttons">
+          <button id="resubmitFare" style="opacity: 0; width: 33%; transition: opacity .35s ease-in-out; transition-delay: 1s;" type="button" class="button" onclick="resubmit('addFareForm')">Submit Another Fare</button>
         </div>
       </div>
-      <p id="submittedFare" style="opacity: 0; transition: opacity .75s; text-align: center; font-size: 40px;">Submitted Fare</p>
-      <div class="buttons">
-        <button id="resubmitFare" style="opacity: 0; width: 33%; transition: opacity .35s ease-in-out; transition-delay: 1s;" type="button" class="button" onclick="resubmit('addFareForm')">Submit Another Fare</button>
+
+      <div class="tabcontent" id="addExpense">
+        <h2 id="receiptNotice" style="text-align: center">Receipt MUST be included to get credit for Expense</h2>
+        <div class="addExpenseForm">
+          <label for='expenseAmt'>Amount of Expense/Gas</label>
+          <input type='number' id='expenseAmt' placeholder="$" autofocus required><br>
+          <label for='expense'>Type of Expense</label>
+          <div class="buttons" id="expense">
+            <button type="button" class="button half selected" onclick="expense(this)">Gas</button>
+            <button type="button" class="button half" onclick="expense(this)">Expense</button>
+          </div>
+          <label id="descLabel" for='expenseDescription'>Expense Description</label>
+          <textarea id='expenseDescription' rows="2" cols="55"></textarea>
+          <div class="buttons" id="expenseSubmit">
+            <button type="button" class="button" onclick="submit('addExpenseForm')">Submit</button>
+          </div>
+        </div>
+        <p id="submittedExpense" style="opacity: 0; transition: opacity .75s; text-align: center; font-size: 40px;">Submitted Expense</p>
+        <div class="buttons">
+          <button id="resubmitExpense" style="opacity: 0; width: 33%; transition: opacity .35s ease-in-out; transition-delay: 1s;" type="button" class="button" onclick="resubmit('addExpenseForm')">Submit Another Expense</button>
+        </div>
+      </div>
+
+      <div class="tabcontent" id="logOnOff">
+        <div class="logOnForm">
+          <label for='vehicle'>Vehicle #: </label>
+          <input type='number' id='vehicle' autocomplete='on'>
+          <label for="mileage">Odometer: </label>
+          <input type="number" id="mileage">
+          <div class="buttons" id="logForm">
+            <button type="button" class="button" onclick="submit('logOnForm')">Log On</button>
+          </div>
+          <button type='button' class='logOff' onclick='logOff'></button>
+        </div>
+      </div>
+
+      <div class="tabcontent" id="editFare">
+        <h2 id="loading">Loading...</h2>
       </div>
     </div>
-
-    <div class="tabcontent" id="addExpense">
-      <h2 id="receiptNotice" style="text-align: center">Receipt MUST be included to get credit for Expense</h2>
-      <div class="addExpenseForm">
-        <label for='expenseAmt'>Amount of Expense/Gas</label>
-        <input type='number' id='expenseAmt' placeholder="$" autofocus required><br>
-        <label for='expense'>Type of Expense</label>
-        <div class="buttons" id="expense">
-          <button type="button" class="button half selected" onclick="expense(this)">Gas</button>
-          <button type="button" class="button half" onclick="expense(this)">Expense</button>
-        </div>
-        <label id="descLabel" for='expenseDescription'>Expense Description</label>
-        <textarea id='expenseDescription' rows="2" cols="55"></textarea>
-        <div class="buttons" id="expenseSubmit">
-          <button type="button" class="button" onclick="submit('addExpenseForm')">Submit</button>
-        </div>
-      </div>
-      <p id="submittedExpense" style="opacity: 0; transition: opacity .75s; text-align: center; font-size: 40px;">Submitted Expense</p>
-      <div class="buttons">
-        <button id="resubmitExpense" style="opacity: 0; width: 33%; transition: opacity .35s ease-in-out; transition-delay: 1s;" type="button" class="button" onclick="resubmit('addExpenseForm')">Submit Another Expense</button>
-      </div>
-    </div>
-
-    <div class="tabcontent" id="logOnOff">
-      <div class="logOnForm">
-        <label for='vehicle'>Vehicle #: </label>
-        <input type='number' id='vehicle' autocomplete='on'>
-        <label for="mileage">Current Mileage </label>
-        <input type="number" id="mileage">
-        <div class="buttons" id="logForm">
-          <button type="button" class="button" onclick="submit('logOnForm')">Log On</button>
-        </div>
-        <button type='button' class='logOff' onclick='logOff'></button>
-      </div>
-    </div>
-
-    <div class="tabcontent" id="editFare">
-      <h2 id="loading">Loading...</h2>
-    </div>
-
-<<<<<<< HEAD
-    <!-- <script src="https://rawgit.com/N8Sayer/gas-cabease/master/functions.js"></script> -->
-    <script src="functions-dev.js"></script>
-=======
     <script src="https://cdn.rawgit.com/N8Sayer/gas-cabease/28b14dee/functions-dev.js"></script>
->>>>>>> origin/master
   </body>
 </html>

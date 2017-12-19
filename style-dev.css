@@ -244,3 +244,29 @@ label[for=fareAmt] {
   border: none;
   text-align: left;
 }
+#warning {
+   color: red;
+   font-size: 3.4vw;
+   margin-bottom: 5px;
+}
+.verify {
+  display: flex;
+  flex-flow: column wrap;
+  width: 50%;
+  padding: 0;
+  margin: 50px auto;
+}
+.verify label,
+.verify input {
+  font-size: 4vw;
+}
+.verify input {
+  margin-bottom: 20px;
+}
+.verify .buttons {
+  width: 75%;
+  margin: auto;
+}
+.walled {
+  display: none;
+}
