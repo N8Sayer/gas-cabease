@@ -1,9 +1,3 @@
-google.script.run.withSuccessHandler(setDriverId).getDriverId(driverEmail);
-
-function setDriverId(id) {
-  userId = id;
-}
-
 function submit(formName) {
   var tip = "";
   var description = "";
@@ -386,8 +380,7 @@ function verifyDriver(form) {
       function validTrue(truthy) {
         if (truthy) {
           console.log('valid user');
-          var driverEmail = email;
-          showPage();
+          google.script.run.withSuccessHandler(showPage).getDriverId(email);
         }
         else if (!truthy) {
           document.getElementById('warning').innerHTML = "That is not a valid email address and/or password";
@@ -402,7 +395,8 @@ function verifyDriver(form) {
   }
 }
 
-function showPage() {
+function showPage(id) {
+  userId = id;
   document.getElementsByClassName('walled')[0].style.display = 'block';
   document.getElementsByClassName('verify')[0].style.display = 'none';
 }
