@@ -379,7 +379,7 @@ function verifyDriver(form) {
       google.script.run.withSuccessHandler(validTrue).getLogIn(email.toLowerCase(),password);
       function validTrue(truthy) {
         if (truthy) {
-          console.log('valid user');
+          console.log('valid user: '+email);
           google.script.run.withSuccessHandler(showPage).getDriverId(email);
         }
         else if (!truthy) {
@@ -397,6 +397,7 @@ function verifyDriver(form) {
 
 function showPage(id) {
   userId = id;
+  console.log(userId);
   document.getElementsByClassName('walled')[0].style.display = 'block';
   document.getElementsByClassName('verify')[0].style.display = 'none';
 }
