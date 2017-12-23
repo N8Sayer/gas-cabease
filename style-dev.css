@@ -11,17 +11,19 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .notification {
   display: none;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
   background-color: #ccc;
+  color: black;
   margin: 0;
 }
+.notification p {
+  padding-left: 3%;
+}
 .notification button {
-  position: relative;
-  right: 0;
-  width: 10%;
+  width: 20%;
   font-size: 4vw;
-  margin: 0;
+  margin: 0px 10px;
   padding: 0;
 }
 .logOff {
