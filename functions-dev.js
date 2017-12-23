@@ -1,3 +1,4 @@
+var userId = "";
 function submit(formName) {
   var tip = "";
   var description = "";
@@ -48,8 +49,10 @@ function submit(formName) {
     case 'logOnForm':
       var menuType = 'Log On/ Log Off';
       log = document.getElementById('logForm').childNodes[1].innerHTML;
-      mileage = inputs[0].value;
+      description = "Vehicle #: " + inputs[0].value;
       inputs[0].value = "";
+      mileage = inputs[1].value;
+      inputs[1].value = "";
       break;
   }
 
@@ -369,14 +372,14 @@ function toggleMenu(state) {
 function verifyDriver(form) {
   document.getElementById('warning').innerHTML = "";
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-  var email = form.email.value;
+  var email = form.email.value.toLowerCase();
   var password = form.password.value;
   // Conditions
   if (password != '' && email != '') {
     console.log('notblank');
     if (email.match(emailReg)) {
       console.log('email valid');
-      google.script.run.withSuccessHandler(validTrue).getLogIn(email.toLowerCase(),password);
+      google.script.run.withSuccessHandler(validTrue).getLogIn(email,password);
       function validTrue(truthy) {
         if (truthy) {
           console.log('valid user: '+email);
