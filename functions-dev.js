@@ -1,5 +1,5 @@
-var userId = "";
-function submit(formName) {
+google.script.run.withSuccessHandler(showPage).checkLogIn();
+      function submit(formName) {
   var tip = "";
   var description = "";
   var confirmationNum = "";
@@ -49,7 +49,7 @@ function submit(formName) {
     case 'logOnForm':
       var menuType = 'Log On/ Log Off';
       log = document.getElementById('logForm').childNodes[1].innerHTML;
-      description = "Vehicle #: " + inputs[0].value;
+      description = "Fleet Vehicle " + inputs[0].value;
       inputs[0].value = "";
       mileage = inputs[1].value;
       inputs[1].value = "";
@@ -82,6 +82,7 @@ function submitted(formName) {
     } else if (document.getElementById('logon').innerHTML == 'Log Off') {
       document.getElementById('logon').innerHTML = 'Log On';
       document.getElementById('logForm').childNodes[1].innerHTML = 'Log On';
+      showPage("");
     }
   }
 }
@@ -399,8 +400,15 @@ function verifyDriver(form) {
 }
 
 function showPage(id) {
-  userId = id;
-  console.log(userId);
-  document.getElementsByClassName('walled')[0].style.display = 'block';
-  document.getElementsByClassName('verify')[0].style.display = 'none';
+  if (id !== "") {
+    userId = id;
+    document.getElementsByClassName('walled')[0].style.display = 'block';
+    document.getElementsByClassName('verify')[0].style.display = 'none';
+  }
+  else {
+    console.log('Not Logged In');
+    document.getElementsByClassName('walled')[0].style.display = 'none';
+    document.getElementsByClassName('verify')[0].style.display = 'block';
+    google.script.run.logOff();
+  }
 }
