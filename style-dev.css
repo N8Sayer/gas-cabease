@@ -9,6 +9,20 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+.notification {
+  display: none;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  height: 5%;
+  background-color: #ccc;
+  margin: 0;
+}
+.notification button {
+  width: 10%;
+  font-size: 4vw;
+  margin: 0;
+  padding: 0;
+}
 .logOff {
   display: none;
   position: absolute;
