@@ -376,6 +376,7 @@ function toggleMenu(state) {
 }
 
 function verifyDriver(form) {
+  console.log(form);
   document.getElementById('warning').innerHTML = "";
   email = form.email.value.toLowerCase();
   var password = form.password.value;
@@ -384,8 +385,6 @@ function verifyDriver(form) {
   // Conditions
   if (email != '' && (password !== "" || (newPass !== "" && newPassConfirm !== ""))) {
     if (newPass == newPassConfirm && newPass !== "" && newPassConfirm !== "") {
-      google.script.run.withSuccessHandler(runApp).setNewUserPassword(email,newPass);
-
       function runApp(status) {
         console.log(status);
         if (status == 'success') {
@@ -393,6 +392,7 @@ function verifyDriver(form) {
           setInterval(google.script.run.withSuccessHandler(showPage).getDriverId(email),2500);
         }
       }
+      google.script.run.withSuccessHandler(runApp).setNewUserPassword(email,newPass);      
     } else if (newPass !== newPassConfirm) {
       document.getElementById('warning').innerHTML = "Please make sure that your password matches.";
     } else if (password !== "") {
