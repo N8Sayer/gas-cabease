@@ -388,7 +388,7 @@ function verifyDriver(form) {
       function runApp(status) {
         console.log(status);
         if (status == 'success') {
-          document.getElementById('warning').innerHTML = 'Password Set';
+          document.getElementById('warning').innerHTML = 'Password Set. Please refresh the page to log in.';
           google.script.run.withSuccessHandler(showPage).getDriverId(email);
         }
         else {
