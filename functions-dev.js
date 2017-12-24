@@ -387,7 +387,11 @@ function verifyDriver(form) {
       google.script.run.withSuccessHandler(runApp).setNewUserPassword(email,newPass);
 
       function runApp(status) {
-        google.script.run.withSuccessHandler(showPage).getDriverId(email);
+        console.log(status);
+        if (status == 'success') {
+          document.getElementById('warning').innerHTML = 'Password Set';
+          setInterval(google.script.run.withSuccessHandler(showPage).getDriverId(email),2500);
+        }
       }
     } else if (newPass !== newPassConfirm) {
       document.getElementById('warning').innerHTML = "Please make sure that your password matches.";
