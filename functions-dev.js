@@ -1,5 +1,6 @@
 google.script.run.withSuccessHandler(showPage).checkLogIn();
-      function submit(formName) {
+
+function submit(formName) {
   var tip = "";
   var description = "";
   var confirmationNum = "";
@@ -18,42 +19,44 @@ google.script.run.withSuccessHandler(showPage).checkLogIn();
 
   if(selectedButtons) {
     Array.from(selectedButtons).forEach(function(button) {
-      if (button.innerHTML == "Yes" || button.innerHTML == "Expense") {
-        description = form.getElementsByTagName('textarea')[0].value;
-      }
-      else if (button.innerHTML == "Credit Card") {
-        tip = inputs[2].value;
-        description = creditSelected[0].innerHTML + ", " + creditSelected[1].innerHTML;
-      }
-    });
-  }
+    if (button.innerHTML == "Yes" || button.innerHTML == "Expense") {
+      description = form.getElementsByTagName('textarea')[0].value;
+    }
+    else if (button.innerHTML == "Credit Card") {
+      tip = inputs[2].value;
+      description = creditSelected[0].innerHTML + ", " + creditSelected[1].innerHTML;
+    }
+  });
+}
 
-  switch(formName) {
-    case 'addFareForm':
-      var menuType = "Add Fare";
-      confirmationNum = inputs[0].value;
-      fareAmt = inputs[1].value;
-      fareType = selectedButtons[0].innerHTML;
-      inputs[0].value = "";
-      inputs[1].value = "";
-      inputs[2].value = "";
-      form.getElementsByTagName('textarea')[0].value = "";
-      break;
-    case 'addExpenseForm':
-      var menuType = "Add Expense/ Add Gas";
-      expAmt = inputs[0].value;
-      expType = selectedButtons[0].innerHTML;
-      inputs[0].value = "";
-      form.getElementsByTagName('textarea')[0].value = "";
-      break;
-    case 'logOnForm':
-      var menuType = 'Log On/ Log Off';
-      log = document.getElementById('logForm').childNodes[1].innerHTML;
-      description = "Fleet Vehicle " + inputs[0].value;
-      inputs[0].value = "";
-      mileage = inputs[1].value;
-      inputs[1].value = "";
-      break;
+switch(formName) {
+  case 'addFareForm':
+    var menuType = "Add Fare";
+    confirmationNum = inputs[0].value;
+    fareAmt = inputs[1].value;
+    fareType = selectedButtons[0].innerHTML;
+    inputs[0].value = "";
+    inputs[1].value = "";
+    inputs[2].value = "";
+    form.getElementsByTagName('textarea')[0].value = "";
+    break;
+  case 'addExpenseForm':
+    var menuType = "Add Expense/ Add Gas";
+    expAmt = inputs[0].value;
+    expType = selectedButtons[0].innerHTML;
+    inputs[0].value = "";
+    form.getElementsByTagName('textarea')[0].value = "";
+    break;
+  case 'logOnForm':
+    var menuType = 'Log On/ Log Off';
+    var vehicleNum = inputs[0].value;
+    log = document.getElementById('logForm').childNodes[1].innerHTML;
+    description = "Fleet Vehicle " + vehicleNum;
+    mileage = inputs[1].value;
+    google.script.run.withSuccessHandler(updateNotification).checkMileage(vehicleNum,mileage);
+    inputs[0].value = "";
+    inputs[1].value = "";
+    break;
   }
 
   output.push(userId,menuType,tip,confirmationNum,fareAmt,fareType,expAmt,expType,description,log,mileage);
@@ -79,10 +82,12 @@ function submitted(formName) {
     if (document.getElementById('logon').innerHTML == 'Log On') {
       document.getElementById('logon').innerHTML = 'Log Off';
       document.getElementById('logForm').childNodes[1].innerHTML = 'Log Off';
+      google.script.run.withSuccessHandler(clocked).setClockIn();
     } else if (document.getElementById('logon').innerHTML == 'Log Off') {
       document.getElementById('logon').innerHTML = 'Log On';
       document.getElementById('logForm').childNodes[1].innerHTML = 'Log On';
-      showPage("");
+      google.script.run.logOff();
+      showPage({ id: "", clocked: false });
     }
   }
 }
@@ -340,7 +345,7 @@ function openTab(evt, name) {
   }
   document.getElementById(name).style.display = "block";
   if (evt == 'login') {
-    tablinks[1].className += " active";
+    tablinks[0].className += " active";
   } else {
     evt.currentTarget.className += " active";
   }
@@ -372,43 +377,141 @@ function toggleMenu(state) {
 
 function verifyDriver(form) {
   document.getElementById('warning').innerHTML = "";
-  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-  var email = form.email.value.toLowerCase();
+  email = form.email.value.toLowerCase();
   var password = form.password.value;
+  var newPass = form.password1.value;
+  var newPassConfirm = form.password2.value;
   // Conditions
-  if (password != '' && email != '') {
-    console.log('notblank');
-    if (email.match(emailReg)) {
-      console.log('email valid');
-      google.script.run.withSuccessHandler(validTrue).getLogIn(email,password);
-      function validTrue(truthy) {
-        if (truthy) {
-          console.log('valid user: '+email);
+  if (email != '' && (password !== "" || (newPass !== "" && newPassConfirm !== ""))) {
+    if (newPass == newPassConfirm && newPass !== "" && newPassConfirm !== "") {
+      google.script.run.withSuccessHandler(runApp).setNewUserPassword(email,newPass);
+
+      function runApp(status) {
+        google.script.run.withSuccessHandler(showPage).getDriverId(email);
+      }
+    } else if (newPass !== newPassConfirm) {
+      document.getElementById('warning').innerHTML = "Please make sure that your password matches.";
+    } else if (password !== "") {
+      google.script.run.withSuccessHandler(validEmail).getLogIn(email,password);
+      function validEmail(statement) {
+        if (statement == 'verified') {
           google.script.run.withSuccessHandler(showPage).getDriverId(email);
         }
-        else if (!truthy) {
+        else {
           document.getElementById('warning').innerHTML = "That is not a valid email address and/or password";
         }
       }
-    } else {
-      document.getElementById('warning').innerHTML = "Please enter a valid email address";
+    }
+    else {
+      document.getElementById('warning').innerHTML = "Please enter a password.";
     }
   }
   else {
-    document.getElementById('warning').innerHTML = "All fields are required";
+    document.getElementById('warning').innerHTML = "Please fill out all fields";
   }
 }
 
-function showPage(id) {
-  if (id !== "") {
-    userId = id;
-    document.getElementsByClassName('walled')[0].style.display = 'block';
-    document.getElementsByClassName('verify')[0].style.display = 'none';
-  }
-  else {
-    console.log('Not Logged In');
+function showPage(obj) {
+  if (obj.id !== "") {
+    if (obj.clocked == "true") {
+      userId = obj.id;
+      document.getElementsByClassName('walled')[0].style.display = 'block';
+      document.getElementsByClassName('verify')[0].style.display = 'none';
+      submitted('logOnForm');
+    } else if (obj.clocked == "false") {
+      userId = obj.id;
+      document.getElementsByClassName('walled')[0].style.display = 'block';
+      document.getElementsByClassName('verify')[0].style.display = 'none';
+    }
+  } else {
     document.getElementsByClassName('walled')[0].style.display = 'none';
     document.getElementsByClassName('verify')[0].style.display = 'block';
-    google.script.run.logOff();
+  }
+}
+
+function updateNotification(update) {
+  var noteText = document.getElementsByClassName('notificationText');
+
+  Array.from(noteText).forEach(function (notification) {
+    switch (update) {
+      case 'overdue':
+        var parent = notification.parentElement;
+        parent.style.display = 'flex';
+
+        if (window.innerWidth <= 768) {
+          var menuWidth = document.getElementsByClassName('menu')[0].offsetWidth;
+          var menuHeight = document.getElementsByClassName('menu')[0].offsetHeight;
+
+          parent.style.width = "calc(100% - "+ menuWidth +"px)";
+          parent.style.height = menuHeight;
+        }
+        else {
+          parent.style.width = "100%";
+          parent.style.height = "10%";
+        }
+        notification.innerHTML = "Your vehicle is overdue for an oil change. Report to your manager after your shift.";
+        break;
+      case 'warning':
+         var parent = notification.parentElement;
+         parent.style.display = 'flex';
+
+         if (window.innerWidth <= 768) {
+         var menuWidth = document.getElementsByClassName('menu')[0].offsetWidth;
+         var menuHeight = document.getElementsByClassName('menu')[0].offsetHeight;
+
+         parent.style.width = "calc(100% - "+ menuWidth +"px)";
+         parent.style.height = menuHeight;
+         }
+         else {
+         parent.style.width = "100%";
+         parent.style.height = "10%";
+         }
+        notification.innerHTML = "Your vehicle is due for an oil change. Please schedule one before your next service date.";
+        break;
+      default:
+        break;
+    }
+  });
+}
+
+function closeNotification() {
+  var noteElements = document.getElementsByClassName('notification');
+  Array.from(noteElements).forEach(function (notification) {
+    notification.style.display = 'none';
+  });
+}
+
+function emailChecker(emailStatus) {
+  if (emailStatus == 'newuser') {
+    document.getElementById('warning').innerHTML = "This account doesn't have a password. Please enter a new one, then press Submit.";
+    document.getElementById('password').style.display = 'none';
+    document.getElementById('passwordLabel').style.display = 'none';
+    document.getElementById('password1').style.display = 'block';
+    document.getElementById('password1Label').style.display = 'block';
+    document.getElementById('password2').style.display = 'block';
+    document.getElementById('password2Label').style.display = 'block';
+    document.getElementById('logPageSubmit').value = 'Submit Password';
+  }
+  else if (emailStatus == 'verified') {
+    document.getElementById('password').disabled = false;
+    document.getElementById('warning').innerHTML = "";
+    document.getElementById('password').style.display = 'block';
+    document.getElementById('passwordLabel').style.display = 'block';
+    document.getElementById('password1').style.display = 'none';
+    document.getElementById('password1Label').style.display = 'none';
+    document.getElementById('password2').style.display = 'none';
+    document.getElementById('password2Label').style.display = 'none';
+    document.getElementById('logPageSubmit').value = 'Sign In';
+  }
+  else if (emailStatus == 'unverified') {
+    document.getElementById('password').disabled = true;
+    document.getElementById('password').style.display = 'block';
+    document.getElementById('passwordLabel').style.display = 'block';
+    document.getElementById('password1').style.display = 'none';
+    document.getElementById('password1Label').style.display = 'none';
+    document.getElementById('password2').style.display = 'none';
+    document.getElementById('password2Label').style.display = 'none';
+    document.getElementById('warning').innerHTML = "Please enter a valid email to continue.";
+    document.getElementById('logPageSubmit').value = 'Sign In';
   }
 }

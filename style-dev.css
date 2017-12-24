@@ -9,6 +9,13 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+#password1,
+#password2,
+#password1Label,
+#password2Label,
+#emailValidation {
+  display: none;
+}
 .notification {
   display: none;
   flex-flow: row nowrap;
@@ -246,6 +253,7 @@ label[for=discrepancyReason]{
 }
 #logForm button {
   margin-left: 4px;
+  width: 95%;
 }
 #fareAmt,
 label[for=fareAmt] {
