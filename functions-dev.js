@@ -389,10 +389,13 @@ function verifyDriver(form) {
         console.log(status);
         if (status == 'success') {
           document.getElementById('warning').innerHTML = 'Password Set';
-          setInterval(google.script.run.withSuccessHandler(showPage).getDriverId(email),2500);
+          google.script.run.withSuccessHandler(showPage).getDriverId(email);
+        }
+        else {
+          document.getElementById('warning').innerHTML = 'Something went wrong. Contact your supervisor for assistance.';
         }
       }
-      google.script.run.withSuccessHandler(runApp).setNewUserPassword(email,newPass);      
+      google.script.run.withSuccessHandler(runApp).setNewUserPassword(email,newPass);
     } else if (newPass !== newPassConfirm) {
       document.getElementById('warning').innerHTML = "Please make sure that your password matches.";
     } else if (password !== "") {
