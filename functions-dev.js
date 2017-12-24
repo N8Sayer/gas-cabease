@@ -82,7 +82,7 @@ function submitted(formName) {
     if (document.getElementById('logon').innerHTML == 'Log On') {
       document.getElementById('logon').innerHTML = 'Log Off';
       document.getElementById('logForm').childNodes[1].innerHTML = 'Log Off';
-      google.script.run.withSuccessHandler(clocked).setClockIn();
+      google.script.run.setClockIn();
     } else if (document.getElementById('logon').innerHTML == 'Log Off') {
       document.getElementById('logon').innerHTML = 'Log On';
       document.getElementById('logForm').childNodes[1].innerHTML = 'Log On';
