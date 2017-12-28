@@ -389,7 +389,7 @@ function verifyDriver(form) {
         if (obj.status == 'success') {
           document.getElementById('warning').innerHTML = 'Password Set. You will now be redirected to the app.';
           obj.clocked = 'false';
-          setInterval(showPage(obj), 3000);
+          setInterval(showPage(obj), 5000);
         }
         else {
           document.getElementById('warning').innerHTML = 'Something went wrong. Contact your supervisor for assistance.';
