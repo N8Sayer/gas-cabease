@@ -385,11 +385,11 @@ function verifyDriver(form) {
   // Conditions
   if (email != '' && (password !== "" || (newPass !== "" && newPassConfirm !== ""))) {
     if (newPass == newPassConfirm && newPass !== "" && newPassConfirm !== "") {
-      function runApp(status) {
-        console.log(status);
-        if (status == 'success') {
-          document.getElementById('warning').innerHTML = 'Password Set. Please refresh the page to log in.';
-          google.script.run.withSuccessHandler(showPage).getDriverId(email);
+      function runApp(obj) {
+        if (obj.status == 'success') {
+          document.getElementById('warning').innerHTML = 'Password Set. You will now be redirected to the app.';
+          obj.clocked = 'false';
+          setInterval(showPage(obj), 3000);
         }
         else {
           document.getElementById('warning').innerHTML = 'Something went wrong. Contact your supervisor for assistance.';
