@@ -376,8 +376,6 @@ function toggleMenu(state) {
 }
 
 function verifyDriver(form) {
-  console.log(form);
-  document.getElementById('warning').innerHTML = "";
   email = form.email.value.toLowerCase();
   var password = form.password.value;
   var newPass = form.password1.value;
@@ -390,6 +388,7 @@ function verifyDriver(form) {
           document.getElementById('warning').innerHTML = 'Password Set. You will now be redirected to the app.';
           obj.clocked = 'false';
           setInterval(showPage(obj), 5000);
+          emailChecker('verified');
         }
         else {
           document.getElementById('warning').innerHTML = 'Something went wrong. Contact your supervisor for assistance.';
@@ -419,6 +418,7 @@ function verifyDriver(form) {
 }
 
 function showPage(obj) {
+  console.log(obj);
   if (obj.id !== "") {
     if (obj.clocked == "true") {
       userId = obj.id;
