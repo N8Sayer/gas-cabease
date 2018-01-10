@@ -346,6 +346,8 @@ function openTab(evt, name) {
   document.getElementById(name).style.display = "block";
   if (evt == 'login') {
     tablinks[0].className += " active";
+  } else if (evt == 'redirect') {
+    tablinks[3].className += " active";
   } else {
     evt.currentTarget.className += " active";
   }
@@ -427,6 +429,8 @@ function showPage(obj) {
       submitted('logOnForm');
     } else if (obj.clocked == false) {
       userId = obj.id;
+      toggleMenu('false');
+      openTab('redirect','logOnForm');
       document.getElementsByClassName('walled')[0].style.display = 'block';
       document.getElementsByClassName('verify')[0].style.display = 'none';
     }
