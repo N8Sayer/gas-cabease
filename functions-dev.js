@@ -386,7 +386,7 @@ function verifyDriver(form) {
       function runApp(obj) {
         if (obj.status == 'success') {
           document.getElementById('warning').innerHTML = 'Password Set. You will now be redirected to the app.';
-          obj.clocked = 'false';
+          obj.clocked = false;
           setInterval(showPage(obj), 5000);
           emailChecker('verified');
         }
@@ -420,12 +420,12 @@ function verifyDriver(form) {
 function showPage(obj) {
   console.log(obj);
   if (obj.id !== "") {
-    if (obj.clocked == "true") {
+    if (obj.clocked == true) {
       userId = obj.id;
       document.getElementsByClassName('walled')[0].style.display = 'block';
       document.getElementsByClassName('verify')[0].style.display = 'none';
       submitted('logOnForm');
-    } else if (obj.clocked == "false") {
+    } else if (obj.clocked == false) {
       userId = obj.id;
       document.getElementsByClassName('walled')[0].style.display = 'block';
       document.getElementsByClassName('verify')[0].style.display = 'none';
