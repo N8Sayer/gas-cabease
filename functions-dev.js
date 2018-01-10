@@ -429,7 +429,7 @@ function showPage(obj) {
       submitted('logOnForm');
     } else if (obj.clocked == false) {
       userId = obj.id;
-      toggleMenu('false');
+      toggleMenu('true');
       openTab('redirect','logOnOff');
       document.getElementsByClassName('walled')[0].style.display = 'block';
       document.getElementsByClassName('verify')[0].style.display = 'none';
