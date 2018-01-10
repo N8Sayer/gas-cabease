@@ -430,7 +430,7 @@ function showPage(obj) {
     } else if (obj.clocked == false) {
       userId = obj.id;
       toggleMenu('false');
-      openTab('redirect','logOnForm');
+      openTab('redirect','logOnOff');
       document.getElementsByClassName('walled')[0].style.display = 'block';
       document.getElementsByClassName('verify')[0].style.display = 'none';
     }
