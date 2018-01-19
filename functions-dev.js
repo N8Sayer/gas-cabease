@@ -429,11 +429,14 @@ function showPage(obj) {
 			submitted("logOnForm");
 		} else if (obj.clocked == "false") {
 			userId = obj.id;
-			toggleMenu("true");
 			openTab("redirect", "logOnOff");
-			document.getElementsByClassName("menu")[0].style.display = "none";
 			document.getElementsByClassName("walled")[0].style.display = "block";
 			document.getElementsByClassName("verify")[0].style.display = "none";
+			if (window.screen.width < 769) {
+				document.getElementsByClassName("menu")[0].style.display = "none";
+			} else {
+				toggleMenu("true");
+			}
 		}
 	} else {
 		document.getElementsByClassName("walled")[0].style.display = "none";
