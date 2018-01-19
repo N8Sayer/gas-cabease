@@ -80,8 +80,11 @@ function submitted(formName) {
 			document.getElementById("logon").innerHTML = "Log Off";
 			document.getElementById("logForm").childNodes[1].innerHTML = "Log Off";
 			google.script.run.setClockIn();
-			document.getElementsByClassName("menu")[0].style.display = "inline";
-			toggleMenu("false");
+			if (window.screen.width < 769) {
+				document.getElementsByClassName("menu")[0].style.display = "inline";
+			} else {
+				toggleMenu("false");
+			}
 		} else if (document.getElementById("logon").innerHTML == "Log Off") {
 			document.getElementById("logon").innerHTML = "Log On";
 			document.getElementById("logForm").childNodes[1].innerHTML = "Log On";
