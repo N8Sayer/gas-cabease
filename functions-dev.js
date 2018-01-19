@@ -1,9 +1,4 @@
 google.script.run.withSuccessHandler(showPage).checkLogIn();
-// TODO: Need to make sure clockedIn is functioning correctly, and add a timestamp to each Clock In.
-// Compare Last timestamp from an entry to current time on each opening of the app.
-// If no submissions for 6 hours, devalue the clockedIn status to false.
-// TODO: Finish fixing the redirect Martin mentioned. It's not redirecting to the Log On Page explicitly
-// on every log in (unless they're still clocked in, then it SHOULD go to Add Fare).
 
 function submit(formName) {
 	var tip = "";
@@ -90,7 +85,7 @@ function submitted(formName) {
 			document.getElementById("logon").innerHTML = "Log On";
 			document.getElementById("logForm").childNodes[1].innerHTML = "Log On";
 			google.script.run.logOff();
-			showPage({ id: "", clocked: false });
+			showPage({ id: "", clocked: "false" });
 		}
 	}
 }
@@ -393,7 +388,7 @@ function verifyDriver(form) {
 			function runApp(obj) {
 				if (obj.status == "success") {
 					document.getElementById("warning").innerHTML = "Password Set. You will now be redirected to the app.";
-					obj.clocked = false;
+					obj.clocked = "false";
 					setInterval(showPage(obj), 5000);
 					emailChecker("verified");
 				} else {
