@@ -81,6 +81,7 @@ function submitted(formName) {
 			document.getElementById("logForm").childNodes[1].innerHTML = "Log Off";
 			google.script.run.setClockIn();
 			document.getElementsByClassName("menu")[0].style.display = "inline";
+			toggleMenu("false");
 		} else if (document.getElementById("logon").innerHTML == "Log Off") {
 			document.getElementById("logon").innerHTML = "Log On";
 			document.getElementById("logForm").childNodes[1].innerHTML = "Log On";
@@ -425,6 +426,7 @@ function showPage(obj) {
 			submitted("logOnForm");
 		} else if (obj.clocked == "false") {
 			userId = obj.id;
+			toggleMenu("true");
 			openTab("redirect", "logOnOff");
 			document.getElementsByClassName("menu")[0].style.display = "none";
 			document.getElementsByClassName("walled")[0].style.display = "block";
