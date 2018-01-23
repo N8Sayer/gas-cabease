@@ -54,11 +54,10 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 /* Style the tab */
 .tab {
-	display: none;
 	overflow: hidden;
 	border: 1px solid #ccc;
 	background-color: #f1f1f1;
-	display: flex;
+	display: fixed;
 	flex-flow: row wrap;
 }
 /* Style the buttons inside the tab */
