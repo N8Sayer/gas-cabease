@@ -5,6 +5,7 @@
 	.tab {
 		flex-flow: column wrap;
 		border: none;
+		position: fixed;
 		width: 40%;
 		right: 0px;
 		top: 0px;

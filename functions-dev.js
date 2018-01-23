@@ -82,6 +82,7 @@ function submitted(formName) {
 			google.script.run.setClockIn();
 			if (window.innerWidth <= 768) {
 				document.getElementsByClassName("menu")[0].style.display = "block";
+				document.getElementsByClassName("tab")[0].style.display = "block";
 			} else {
 				document.getElementsByClassName("tab")[0].style.display = "block";
 			}
