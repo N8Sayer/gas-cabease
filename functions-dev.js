@@ -81,9 +81,10 @@ function submitted(formName) {
 			document.getElementById("logForm").childNodes[1].innerHTML = "Log Off";
 			google.script.run.setClockIn();
 			if (window.screen.width < 769) {
-				document.getElementsByClassName("menu")[0].style.display = "inline";
-			} else {
+				document.getElementsByClassName("menu")[0].style.display = "fixed";
 				toggleMenu("false");
+			} else {
+				document.getElementsByClassName("tab")[0].style.display = "fixed";
 			}
 		} else if (document.getElementById("logon").innerHTML == "Log Off") {
 			document.getElementById("logon").innerHTML = "Log On";
@@ -435,7 +436,7 @@ function showPage(obj) {
 			if (window.screen.width < 769) {
 				document.getElementsByClassName("menu")[0].style.display = "none";
 			} else {
-				toggleMenu("true");
+				document.getElementsByClassName("tab")[0].style.display = "none";
 			}
 		}
 	} else {
