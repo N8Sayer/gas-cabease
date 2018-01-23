@@ -80,10 +80,10 @@ function submitted(formName) {
 			document.getElementById("logon").innerHTML = "Log Off";
 			document.getElementById("logForm").childNodes[1].innerHTML = "Log Off";
 			google.script.run.setClockIn();
-			if (window.screen.width < 769) {
-				document.getElementsByClassName("menu")[0].style.display = "fixed";
+			if (window.innerWidth <= 768) {
+				document.getElementsByClassName("menu")[0].style.display = "block";
 			} else {
-				document.getElementsByClassName("tab")[0].style.display = "fixed";
+				document.getElementsByClassName("tab")[0].style.display = "block";
 			}
 		} else if (document.getElementById("logon").innerHTML == "Log Off") {
 			document.getElementById("logon").innerHTML = "Log On";
@@ -341,7 +341,7 @@ function openTab(evt, name) {
 	tablinks = document.getElementsByClassName("tablinks");
 	for (i = 0; i < tablinks.length; i++) {
 		tablinks[i].className = tablinks[i].className.replace(" active", "");
-		if (window.screen.width < 769) {
+		if (window.innerWidth <= 768) {
 			tablinks[i].style.display = "none";
 			document.getElementsByClassName("menu")[0].value = "false";
 		}
@@ -432,11 +432,6 @@ function showPage(obj) {
 			openTab("redirect", "logOnOff");
 			document.getElementsByClassName("walled")[0].style.display = "block";
 			document.getElementsByClassName("verify")[0].style.display = "none";
-			if (window.screen.width < 769) {
-				document.getElementsByClassName("menu")[0].style.display = "none";
-			} else {
-				document.getElementsByClassName("tab")[0].style.display = "none";
-			}
 		}
 	} else {
 		document.getElementsByClassName("walled")[0].style.display = "none";

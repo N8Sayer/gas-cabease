@@ -1,12 +1,10 @@
 @media screen and (max-width: 768px) {
 	.tablinks {
-		display: none;
 		z-index: 2;
 	}
 	.tab {
 		flex-flow: column wrap;
 		border: none;
-		position: absolute;
 		width: 40%;
 		right: 0px;
 		top: 0px;
