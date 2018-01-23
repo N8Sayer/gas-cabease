@@ -89,6 +89,8 @@ function submitted(formName) {
 		} else if (document.getElementById("logon").innerHTML == "Log Off") {
 			document.getElementById("logon").innerHTML = "Log On";
 			document.getElementById("logForm").childNodes[1].innerHTML = "Log On";
+			document.getElementsByClassName("menu")[0].style.display = "none";
+			document.getElementsByClassName("tab")[0].style.display = "none";
 			google.script.run.logOff();
 			showPage({ id: "", clocked: "false" });
 		}
