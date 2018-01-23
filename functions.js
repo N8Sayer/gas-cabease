@@ -375,7 +375,7 @@ function toggleMenu(state) {
 		button.value = "false";
 	} else if (state == "false") {
 		Array.from(menu).forEach(function(menuItem) {
-			menuItem.style.display = "fixed";
+			menuItem.style.display = "flex";
 		});
 		button.value = "true";
 	}
