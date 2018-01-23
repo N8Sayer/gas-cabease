@@ -82,7 +82,6 @@ function submitted(formName) {
 			google.script.run.setClockIn();
 			if (window.screen.width < 769) {
 				document.getElementsByClassName("menu")[0].style.display = "fixed";
-				toggleMenu("false");
 			} else {
 				document.getElementsByClassName("tab")[0].style.display = "fixed";
 			}
