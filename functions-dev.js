@@ -399,6 +399,20 @@ function verifyDriver(form) {
   }
 }
 
+function validateLogin() {
+  var vehicle = document.getElementById('vehicle').innerHTML;
+  var mileage = document.getElementById('mileage').innerHTML;
+  var logWarning = document.getElementById('logWarning');
+
+  if (vehicle === "" || mileage === "") {
+    logWarning.innerHTML = 'Please fill out both fields';
+  }
+  else if (vehicle !== "" && mileage !== "") {
+    logWarning.innerHTML = "";
+    submit('logOnForm');
+  }
+}
+
 function showPage(id) {
   if (id !== "") {
     userId = id;
