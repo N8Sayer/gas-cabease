@@ -492,34 +492,6 @@ function closeNotification() {
 	});
 }
 
-<<<<<<< HEAD
-function validateLogin() {
-  var vehicle = document.getElementById('vehicle').innerHTML;
-  var mileage = document.getElementById('mileage').innerHTML;
-  var logWarning = document.getElementById('logWarning');
-
-  if (vehicle === "" || mileage === "") {
-    logWarning.innerHTML = 'Please fill out both fields';
-  }
-  else if (vehicle !== "" && mileage !== "") {
-    logWarning.innerHTML = "";
-    submit('logOnForm');
-  }
-}
-
-function showPage(id) {
-  if (id !== "") {
-    userId = id;
-    document.getElementsByClassName('walled')[0].style.display = 'block';
-    document.getElementsByClassName('verify')[0].style.display = 'none';
-  }
-  else {
-    console.log('Not Logged In');
-    document.getElementsByClassName('walled')[0].style.display = 'none';
-    document.getElementsByClassName('verify')[0].style.display = 'block';
-    google.script.run.logOff();
-  }
-=======
 function emailChecker(emailStatus) {
 	if (emailStatus == "newuser") {
 		document.getElementById("warning").innerHTML = "This account doesn't have a password. Please enter a new one, then press Submit.";
@@ -551,5 +523,18 @@ function emailChecker(emailStatus) {
 		document.getElementById("warning").innerHTML = "Please enter a valid email to continue.";
 		document.getElementById("logPageSubmit").value = "Sign In";
 	}
->>>>>>> origin/master
+}
+
+function validateLogin() {
+  var vehicle = document.getElementById('vehicle').value;
+  var mileage = document.getElementById('mileage').value;
+  var logWarning = document.getElementById('logWarning');
+  console.log([vehicle, mileage]);
+  if (vehicle === "" || mileage === "") {
+    logWarning.innerHTML = 'Please fill out both fields';
+  }
+  else if (vehicle !== "" && mileage !== "") {
+    logWarning.innerHTML = "";
+    submit('logOnForm');
+  }
 }
