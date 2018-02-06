@@ -1,12 +1,13 @@
 function doGet(evt) {
-  var email = evt.parameter['email'].toLowerCase();
-  var htmlOutput = HtmlService.createHtmlOutputFromFile('Operations')
+  return HtmlService.createHtmlOutputFromFile('Operations')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     .setTitle('Cab-Ease Dev');
-  return htmlOutput.append('<script> var driverEmail = "'+email+'";</script>');
 }
 
 function sheetUpdate(sheetName, data, editFare) {
+  var userProperties = PropertiesService.getUserProperties();
+  userProperties.setProperty('submissionTimestamp', new Date());
+  
   var date = new Date();
   var output = [];
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
@@ -28,7 +29,7 @@ function sheetUpdate(sheetName, data, editFare) {
     data.unshift(date);
     sheet.getRange(sheetRow+1,1,1,data.length).setValues([data]);
   }
-  sheet.sort(1, false);
+  sheet.sort(1, false);  
 }
 
 function getPastFares(agentId) {
@@ -101,39 +102,147 @@ function getAgentPolicies(agentName) {
   return agentPolicies;
 }
 
-function getEmail() {
-  return Session.getActiveUser().getEmail();
-}
 
 function getDriverId(email) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('C:C').getDisplayValues();
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('B:C').getDisplayValues();
+  var userProperties = PropertiesService.getUserProperties();
+  userProperties.setProperty('loggedIn', "true");
 
   for(var x=0; x<sheet.length; x++) {
-    if(sheet[x][0] == email) {
-      return sheet[x][0];
+    if(sheet[x][1] == email) {
+      userProperties.setProperty('id', sheet[x][0]);
+      return { id: sheet[x][0], clocked: "false" };
     }
   }
 }
 
-function getId() {
-  return getDriverId(getEmail());
+function getEmailStatus(email) {
+  email = email.toLowerCase();
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('C:D').getDisplayValues();
+  var userStatus = '';
+  
+  for(var x=0; x<sheet.length; x++) {
+    if(sheet[x][0] == email && sheet[x][1] !== "") {
+      x=sheet.length;
+      userStatus = 'verified';
+    }
+    else if (sheet[x][0] == email && email !== "" && (sheet[x][1] == "" || sheet[x][1] == undefined)) {
+      x=sheet.length;
+      userStatus = 'newuser';
+    }
+    else {
+      userStatus = 'unverified';
+    }
+  }
+  return userStatus;
+}
+
+function setNewUserPassword(email,password) {
+  var ss = SpreadsheetApp.openById('1C7VML3eMjNEOsHFOCH8iRYgdN2FXi8RkfBodTtxXRig');
+  var sheet = ss.getSheetByName('Roster').getRange('B:D').getDisplayValues();
+  
+  for (var x=0; x<sheet.length; x++) {
+    if (email == sheet[x][1]) {
+      ss.getSheetByName('Roster').getRange(x+1,4).setValue(password);
+      var id = sheet[x][0];
+      x = sheet.length;
+      return { id: id, status: 'success'};
+    }
+  }
+  return "";
 }
 
 function getLogIn(email,password) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('C:D').getDisplayValues();
-<<<<<<< HEAD
-=======
-  
->>>>>>> origin/master
+  var ss = SpreadsheetApp.openById('1C7VML3eMjNEOsHFOCH8iRYgdN2FXi8RkfBodTtxXRig');
+  var sheet = ss.getSheetByName('Roster').getRange('C:D').getDisplayValues();
+  var userProperties = PropertiesService.getUserProperties();
+    
+  var valid = 'unverified';
   sheet.forEach(function (driver) {
-    Logger.log(driver);
     if (email == driver[0] && password == driver[1]) {
-      return true;
+      userProperties.setProperty('email',email);
+      valid = 'verified';
+    }
+  });  
+  return valid;
+}
+
+function setClockIn() {  
+  var timestamp = new Date();
+  var userProperties = PropertiesService.getUserProperties();
+  userProperties.setProperty('clockIn', "true");
+}
+
+function logOff() {
+  var userProperties = PropertiesService.getUserProperties();
+  userProperties.setProperty('loggedIn',"false");
+  userProperties.setProperty('clockIn',"false");
+  userProperties.setProperty('id',"");
+  userProperties.setProperty('email',"");
+}
+
+function checkLogIn() {
+  var currentTime = new Date();
+  var userProperties = PropertiesService.getUserProperties();
+  var logged = userProperties.getProperty('loggedIn');
+  var clocked = userProperties.getProperty('clockIn');
+  var lastActivity = new Date(userProperties.getProperty('submissionTimestamp'));
+  var id = userProperties.getProperty('id');
+  var output = {};
+  
+  if (clocked === null || (lastActivity !== null && (clocked && (currentTime.getTime() - lastActivity.getTime() > 21600000)))) {
+    clocked = "false";
+  } 
+  
+  if (logged) {
+    output.id = id;
+    output.clocked = clocked;    
+  }
+  else {
+    output.id = "";
+    output.clocked = "false";
+  }
+  return output;
+}
+
+function checkMileage(vehicleNum,mileage) {
+  var output = "";
+  var ss = SpreadsheetApp.openById('1C7VML3eMjNEOsHFOCH8iRYgdN2FXi8RkfBodTtxXRig');
+  var sheet = ss.getSheetByName('Fleet Vehicles').getRange('A:E').getDisplayValues();
+  var warning = parseInt(sheet[1][3]);
+  var overdue = parseInt(sheet[1][4]);
+  
+  sheet.forEach(function (vehicle) {
+    var fleetNum = vehicle[0];    
+    var lastOilChange = parseInt(vehicle[1]);    
+    if (fleetNum == vehicleNum) {
+      if ((parseInt(mileage) - lastOilChange) >= overdue) {
+        output = 'overdue';
+        var milesOverdue = (parseInt(mileage) - overdue);
+        emailManager(vehicleNum,mileage,"overdue",milesOverdue);
+      }
+      else if ((parseInt(mileage) - lastOilChange) >= warning) {
+        output = 'warning';
+        var remainingMiles = overdue - (parseInt(mileage) - lastOilChange);
+        emailManager(vehicleNum,mileage,"warning",remainingMiles);
+      }
     }
   });
-  return false;
-<<<<<<< HEAD
+  return output;
 }
-=======
+
+function emailManager(vehicleNum,mileage,update,milesDiff) {
+  var userProperties = PropertiesService.getUserProperties();
+  var userId = userProperties.getProperty('id');
+  var email = userProperties.getProperty('email');
+  var body = 'Fleet Vehicle #'+vehicleNum+' was just reported at '+mileage+' miles by Driver #'+userId+'\n';
+  
+  if (update == 'overdue') {
+    body += 'This vehicle is overdue for it\'s oil change by '+milesDiff+' miles.';
+    MailApp.sendEmail("mkeller1721@gmail.com",email, 'Fleet Vehicle '+vehicleNum+' - Maintenance Overdue', body);
+  }
+  else if (update == 'warning') {
+    body += 'This vehicle is due for an oil change in '+milesDiff+' miles.';
+    MailApp.sendEmail("mkeller1721@gmail.com",email, 'Fleet Vehicle '+vehicleNum+' - Maintenance Warning', body);
+  }    
 }
->>>>>>> origin/master

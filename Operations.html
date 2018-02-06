@@ -5,19 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cab-Ease</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="https://cdn.rawgit.com/N8Sayer/gas-cabease/28b14dee/style-dev.css">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/N8Sayer/gas-cabease/28b14dee/responsive-dev.css"> -->
-    <link rel="stylesheet" href="style-dev.css">
-    <link rel="stylesheet" href="responsive-dev.css">
+    <link rel="stylesheet" href="https://rawgit.com/N8Sayer/gas-cabease/master/style-dev.css">
+    <link rel="stylesheet" href="https://rawgit.com/N8Sayer/gas-cabease/master/responsive-dev.css">
   </head>
   <body>
     <form class='verify'>
       <label for='email'>Email Address</label>
-      <input type='email' id="email" autocomplete='on' placeholder='BW Gmail Address'>
-      <label for='password'>Password</label>
+      <input type='email' id="email" autocomplete='on' placeholder='CabEase Email Address' onfocusout='google.script.run.withSuccessHandler(emailChecker).getEmailStatus(this.value)'>
+      <span id='emailValidation'></span>
+      <label id='passwordLabel' for='password'>Password</label>
       <input type='password' id='password' autocomplete='on'>
+      <label id='password1Label' for='password1'>Password</label>
+      <input type='text' id='password1'>
+      <label id='password2Label' for='password2'>Confirm Password</label>
+      <input type='text' id='password2'>
       <span id='warning'></span>
-      <input type='button' class='buttons' value='Verify Driver' onclick='verifyDriver(this.form)'>
+      <div class="buttons">
+        <input type='button' class='button' id='logPageSubmit' value='Verify Driver' onclick='verifyDriver(this.form)'>
+      </div>
     </form>
 
     <div class='walled'>
@@ -30,10 +35,14 @@
       </div>
 
       <div class="tabcontent" id="addFare">
+        <div class='notification'>
+          <p class='notificationText'></p>
+          <button type='button' class='exit' onclick='closeNotification()'>X</button>
+        </div>
         <div class='addFareForm'>
           <label for="confirmation">Confirmation #</label>
-          <input id="confirmation" type='text' maxlength="11" autofocus required>
-          <label for="fareAmt">Fare Amount</label><input id="fareAmt" type='number' placeholder="$" required>
+          <input id="confirmation" type='text' maxlength="20" autofocus>
+          <label for="fareAmt">Fare Amount</label><input id="fareAmt" type='number' placeholder="$">
           <label for="buttons">Fare Type</label>
           <div class="buttons" id="buttons">
             <button type="button" class="button" onclick="creditCheck(this)">Cash</button>
@@ -74,10 +83,14 @@
       </div>
 
       <div class="tabcontent" id="addExpense">
-        <h2 id="receiptNotice">Receipt MUST be included to get credit for Expense</h2>
+        <div class='notification'>
+          <p class='notificationText'></p>
+          <button type='button' class='exit' onclick='closeNotification()'>X</button>
+        </div>
+        <h2 id="receiptNotice" style="text-align: center">Receipt MUST be included to get credit for Expense</h2>
         <div class="addExpenseForm">
           <label for='expenseAmt'>Amount of Expense/Gas</label>
-          <input type='number' id='expenseAmt' placeholder="$" autofocus required><br>
+          <input type='number' id='expenseAmt' placeholder="$" autofocus><br>
           <label for='expense'>Type of Expense</label>
           <div class="buttons" id="expense">
             <button type="button" class="button half selected" onclick="expense(this)">Gas</button>
@@ -112,7 +125,6 @@
         <h2 id="loading">Loading...</h2>
       </div>
     </div>
-    <!-- <script src="https://cdn.rawgit.com/N8Sayer/gas-cabease/28b14dee/functions-dev.js"></script> -->
-    <script src="functions-dev.js"></script>
+    <script src="https://rawgit.com/N8Sayer/gas-cabease/master/functions-dev.js"></script>
   </body>
 </html>
