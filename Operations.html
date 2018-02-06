@@ -109,16 +109,17 @@
       </div>
 
       <div class="tabcontent" id="logOnOff">
-        <div class="logOnForm">
+        <form class="logOnForm">
           <label for='vehicle'>Vehicle #: </label>
-          <input type='number' id='vehicle' autocomplete='on'>
+          <input type='number' id='vehicle' autocomplete='on' required>
           <label for="mileage">Odometer: </label>
-          <input type="number" id="mileage">
+          <input type="number" id="mileage" required>
+          <p id='logWarning'></p>
           <div class="buttons" id="logForm">
-            <button type="button" class="button" onclick="submit('logOnForm')">Log On</button>
+            <button type="button" class="button" onclick="validateLogin()">Log On</button>
           </div>
           <button type='button' class='logOff' onclick='logOff'></button>
-        </div>
+        </form>
       </div>
 
       <div class="tabcontent" id="editFare">

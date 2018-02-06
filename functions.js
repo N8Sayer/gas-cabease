@@ -524,3 +524,17 @@ function emailChecker(emailStatus) {
 		document.getElementById("logPageSubmit").value = "Sign In";
 	}
 }
+
+function validateLogin() {
+  var vehicle = document.getElementById('vehicle').value;
+  var mileage = document.getElementById('mileage').value;
+  var logWarning = document.getElementById('logWarning');
+  console.log([vehicle, mileage]);
+  if (vehicle === "" || mileage === "") {
+    logWarning.innerHTML = 'Please fill out both fields';
+  }
+  else if (vehicle !== "" && mileage !== "") {
+    logWarning.innerHTML = "";
+    submit('logOnForm');
+  }
+}

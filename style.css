@@ -16,6 +16,15 @@ input[type="number"]::-webkit-outer-spin-button {
 #emailValidation {
 	display: none;
 }
+#password1,
+#password2,
+#emailValidation {
+  display: none;
+}
+#logWarning {
+  font-size: 2vw;
+  color: red;
+}
 .notification {
 	display: none;
 	flex-flow: row nowrap;
@@ -25,7 +34,8 @@ input[type="number"]::-webkit-outer-spin-button {
 	margin: 0;
 }
 .notification p {
-	padding-left: 3%;
+  padding-left: 3%;
+  font-size: 2.8vw;
 }
 .notification button {
 	width: 20%;
