@@ -10,7 +10,8 @@ function sheetUpdate(sheetName, data, editFare) {
   
   var date = new Date();
   var output = [];
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+  var ss = SpreadsheetApp.openById('1SO9Dratuc2B2FK3ZsJZ72VrTLCJzxXvItCMs2gbemhI');
+  var sheet = ss.getSheetByName(sheetName);
   var sheetRow = sheet.getLastRow();
 
   if (editFare !== "" && editFare !== undefined) {
@@ -33,6 +34,7 @@ function sheetUpdate(sheetName, data, editFare) {
 }
 
 function getPastFares(agentId) {
+  var ss = SpreadsheetApp.openById('1SO9Dratuc2B2FK3ZsJZ72VrTLCJzxXvItCMs2gbemhI');
   var output = [];
   var today = new Date();
   var dateMin = 0;
@@ -69,7 +71,7 @@ function getPastFares(agentId) {
       break;
   }
 
-  var data = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(agentId).getDataRange().getDisplayValues();
+  var data = ss.getSheetByName(agentId).getDataRange().getDisplayValues();
 
   for (var x=1; x<data.length; x++) {
     var unformattedDate = data[x][0].split(" ");
@@ -92,7 +94,8 @@ function getPastFares(agentId) {
 }
 
 function getAgentPolicies(agentName) {
-  var database = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Agent Policies').getDataRange().getDisplayValues();
+  var ss = SpreadsheetApp.openById('1SO9Dratuc2B2FK3ZsJZ72VrTLCJzxXvItCMs2gbemhI');
+  var database = ss.getSheetByName('Agent Policies').getDataRange().getDisplayValues();
   var agentPolicies = [];
   database.forEach(function (row) {
     if (agentName == row[1]) {
@@ -104,7 +107,8 @@ function getAgentPolicies(agentName) {
 
 
 function getDriverId(email) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('B:C').getDisplayValues();
+  var ss = SpreadsheetApp.openById('1SO9Dratuc2B2FK3ZsJZ72VrTLCJzxXvItCMs2gbemhI');
+  var sheet = ss.getSheetByName('Roster').getRange('B:C').getDisplayValues();
   var userProperties = PropertiesService.getUserProperties();
   userProperties.setProperty('loggedIn', "true");
 
@@ -118,7 +122,8 @@ function getDriverId(email) {
 
 function getEmailStatus(email) {
   email = email.toLowerCase();
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Roster').getRange('C:D').getDisplayValues();
+  var ss = SpreadsheetApp.openById('1SO9Dratuc2B2FK3ZsJZ72VrTLCJzxXvItCMs2gbemhI');
+  var sheet = ss.getSheetByName('Roster').getRange('C:D').getDisplayValues();
   var userStatus = '';
   
   for(var x=0; x<sheet.length; x++) {
@@ -138,7 +143,7 @@ function getEmailStatus(email) {
 }
 
 function setNewUserPassword(email,password) {
-  var ss = SpreadsheetApp.openById('1C7VML3eMjNEOsHFOCH8iRYgdN2FXi8RkfBodTtxXRig');
+  var ss = SpreadsheetApp.openById('1SO9Dratuc2B2FK3ZsJZ72VrTLCJzxXvItCMs2gbemhI');
   var sheet = ss.getSheetByName('Roster').getRange('B:D').getDisplayValues();
   
   for (var x=0; x<sheet.length; x++) {
@@ -153,7 +158,7 @@ function setNewUserPassword(email,password) {
 }
 
 function getLogIn(email,password) {
-  var ss = SpreadsheetApp.openById('1C7VML3eMjNEOsHFOCH8iRYgdN2FXi8RkfBodTtxXRig');
+  var ss = SpreadsheetApp.openById('1SO9Dratuc2B2FK3ZsJZ72VrTLCJzxXvItCMs2gbemhI');
   var sheet = ss.getSheetByName('Roster').getRange('C:D').getDisplayValues();
   var userProperties = PropertiesService.getUserProperties();
     
@@ -207,42 +212,55 @@ function checkLogIn() {
 
 function checkMileage(vehicleNum,mileage) {
   var output = "";
-  var ss = SpreadsheetApp.openById('1C7VML3eMjNEOsHFOCH8iRYgdN2FXi8RkfBodTtxXRig');
+  var ss = SpreadsheetApp.openById('1SO9Dratuc2B2FK3ZsJZ72VrTLCJzxXvItCMs2gbemhI');
   var sheet = ss.getSheetByName('Fleet Vehicles').getRange('A:E').getDisplayValues();
   var warning = parseInt(sheet[1][3]);
   var overdue = parseInt(sheet[1][4]);
   
   sheet.forEach(function (vehicle) {
     var fleetNum = vehicle[0];    
-    var lastOilChange = parseInt(vehicle[1]);    
+    var lastOilChange = parseInt(vehicle[1]);  
+    var associatedEmail = vehicle[2];
     if (fleetNum == vehicleNum) {
       if ((parseInt(mileage) - lastOilChange) >= overdue) {
         output = 'overdue';
-        var milesOverdue = (parseInt(mileage) - overdue);
-        emailManager(vehicleNum,mileage,"overdue",milesOverdue);
+        var milesOverdue = (parseInt(mileage) - lastOilChange) - overdue;
+        emailManager(vehicleNum,mileage,output,milesOverdue,associatedEmail);
       }
       else if ((parseInt(mileage) - lastOilChange) >= warning) {
         output = 'warning';
         var remainingMiles = overdue - (parseInt(mileage) - lastOilChange);
-        emailManager(vehicleNum,mileage,"warning",remainingMiles);
+        emailManager(vehicleNum,mileage,output,remainingMiles,associatedEmail);
       }
     }
   });
   return output;
 }
 
-function emailManager(vehicleNum,mileage,update,milesDiff) {
+function emailManager(vehicleNum,mileage,update,milesDiff,emailList) {
   var userProperties = PropertiesService.getUserProperties();
   var userId = userProperties.getProperty('id');
   var email = userProperties.getProperty('email');
   var body = 'Fleet Vehicle #'+vehicleNum+' was just reported at '+mileage+' miles by Driver #'+userId+'\n';
   
-  if (update == 'overdue') {
-    body += 'This vehicle is overdue for it\'s oil change by '+milesDiff+' miles.';
-    MailApp.sendEmail("mkeller1721@gmail.com",email, 'Fleet Vehicle '+vehicleNum+' - Maintenance Overdue', body);
+  if (emailList) {
+    if (update == 'overdue') {
+      body += 'This vehicle is overdue for it\'s oil change by '+milesDiff+' miles.';
+      MailApp.sendEmail({
+        to: emailList, 
+        replyTo: email, 
+        subject: 'Fleet Vehicle '+vehicleNum+' - Maintenance Overdue', 
+        htmlBody: body
+      });
+    }
+    else if (update == 'warning') {
+      body += 'This vehicle is due for an oil change in '+milesDiff+' miles.';
+      MailApp.sendEmail({
+        to: emailList, 
+        replyTo: email, 
+        subject: 'Fleet Vehicle '+vehicleNum+' - Maintenance Warning', 
+        htmlBody: body
+      });
+    }    
   }
-  else if (update == 'warning') {
-    body += 'This vehicle is due for an oil change in '+milesDiff+' miles.';
-    MailApp.sendEmail("mkeller1721@gmail.com",email, 'Fleet Vehicle '+vehicleNum+' - Maintenance Warning', body);
-  }    
 }
