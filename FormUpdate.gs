@@ -1,28 +1,3 @@
-// This function automatically updates the Driver ID List Items in the Form from the Roster Spreadsheet page.
-function onEdit(e) {
-  if (e.source.getSheetName() == "Roster") {
-    var roster = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Roster");
-    var rosterData = roster.getRange(1,1,roster.getLastRow(),roster.getLastColumn()).getDisplayValues();
-    var ids = new Array();
-    
-    for (var x=0; x<rosterData.length; x++) {
-      if (rosterData[x][1] !== "") {
-        ids.push(rosterData[x][1]);
-      }
-    }
-    
-    ids.sort();
-    var form = FormApp.openById("1qMfarWhweoLriIRE_19MWMEBu7x5iwT4UJkW-r_vgg4");
-    var items = form.getItems();
-    
-    items.forEach(function (item) {
-      if (item.getTitle() == "Driver ID") {
-        item.asListItem().setChoiceValues(ids);
-      }
-    }); 
-  }
-}
-
 // Assign the Template to the Active sheet
 function active() {
   SpreadsheetApp.getActiveSpreadsheet().setActiveSheet(SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Template"));

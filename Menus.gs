@@ -1,16 +1,12 @@
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
   ui.createMenu('CabEase Scripts')
-    .addItem('Generate New Driver Pages', 'menuItem1')
+    .addItem('Generate New Driver Pages', 'pageGen')
     .addSeparator()
     .addItem('Show Sidebar', 'showSidebar')
     .addSeparator()
     .addItem('Delete Old Drivers', 'cleanRoster')
     .addToUi();
-}
-
-function menuItem1() {
-  pageGen();
 }
 
 function cleanRoster() {
